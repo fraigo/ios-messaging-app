@@ -2,7 +2,7 @@
 //  DataSource.swift
 //  ios-messaging-app
 //
-//  Created by User on 2018-11-23.
+//  Created by Francisco Igor on 2018-11-23.
 //  Copyright © 2018 User. All rights reserved.
 //
 
@@ -13,21 +13,34 @@ class DataSource: NSObject {
     
     static var senders: [NSManagedObject] = []
     static var messages: [NSManagedObject] = []
+    static var currentUser: User!
     
     static func loadData(){
+        senders = reLoadData(entity: "Sender")
+        messages = reLoadData(entity: "Message")
         
-        deleteEntities(entity: "Sender")
-        senders = loadEntities(entity: "Sender", data: arrayFromJsonFromFile(name: "Sender"))
-        print(senders)
-        deleteEntities(entity: "Message")
-        messages = loadEntities(entity: "Message", data: arrayFromJsonFromFile(name: "Message"))
-        print(messages)
     }
     
+    static func reLoadData(entity: String) -> [NSManagedObject]{
+        deleteEntities(entity: entity)
+        let contents = loadEntities(entity: entity, data: arrayFromJsonFromFile(name: entity))
+        //print(contents)
+        return contents
+    }
     
     static func filterMessagesOf(email: String) -> [NSManagedObject]{
         let predicate = NSPredicate(format: "from = %@ or to = %@", email, email)
         return filterEntities(entity: "Message", predicate: predicate)
+    }
+    
+    static func filterField(entity: String, field: String, value: Any) -> [NSManagedObject]
+    {
+        return filterField(entity: entity, field: field, value: value, operation: "=")
+    }
+    
+    static func filterField(entity: String, field: String, value: Any, operation: String) -> [NSManagedObject]{
+        let predicate = NSPredicate(format: "\(field) \(operation) %@", argumentArray: [value])
+        return filterEntities(entity: entity, predicate: predicate)
     }
     
     static func getViewContext() -> NSManagedObjectContext? {
@@ -54,6 +67,8 @@ class DataSource: NSObject {
                     }
                     entities = try managedContext.fetch(fetchRequest)
                 }
+            } catch let error as NSException {
+                print("Could not fetch \(entity): \(error), \(error.userInfo)")
             } catch let error as NSError {
                 print("Could not fetch \(entity): \(error), \(error.userInfo)")
             }
@@ -76,7 +91,7 @@ class DataSource: NSObject {
         }
         return entities
     }
-
+    
     
     static func deleteEntities(entity: String){
         
@@ -106,7 +121,7 @@ class DataSource: NSObject {
             let keys = data.allKeys
             for key in keys{
                 let dataKey = key as! String
-                newEntity.setValue(data.safeValue(forKey: dataKey, defaultValue: "") , forKeyPath:dataKey)
+                newEntity.setValue(data.safeValue(forKey: dataKey, defaultValue: ""), forKeyPath:dataKey)
             }
             
             do {
@@ -118,5 +133,5 @@ class DataSource: NSObject {
     }
     
     
-
+    
 }

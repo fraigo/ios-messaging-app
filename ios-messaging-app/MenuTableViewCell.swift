@@ -13,6 +13,7 @@ class MenuTableViewCell: UITableViewCell {
 
     @IBOutlet weak var senderName: UILabel!
     @IBOutlet weak var senderStatus: UILabel!
+   
     
     var object : NSManagedObject!
     

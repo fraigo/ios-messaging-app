@@ -10,6 +10,8 @@ import UIKit
 import CoreData
 
 class MenuTableViewController: UITableViewController {
+    
+    var senders : [NSManagedObject] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +23,17 @@ class MenuTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
         
         DataSource.loadData()
+        
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        if let user = DataSource.currentUser {
+            senders = DataSource.filterField(entity: "Sender", field: "email", value: user.email, operation: "<>")
+        }else{
+            senders = []
+        }
+        self.tableView.reloadData()
     }
 
     // MARK: - Table view data source
@@ -32,13 +45,13 @@ class MenuTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return DataSource.senders.count
+        return senders.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SenderCell", for: indexPath) as! MenuTableViewCell
-        cell.setItem(DataSource.senders[indexPath.row])
+        cell.setItem(senders[indexPath.row])
 
         return cell
     }

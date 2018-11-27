@@ -3,13 +3,13 @@
         "timestamp": 1543027277792,
         "message": "Hello! How was your week? I was wainting for your message.",
         "from": "user2@gmail.com",
-        "to": "user1@gmail.com",
+        "to": "franciscoigor@gmail.com",
         "visible": 1
     },
     {
         "timestamp": 1543027420561,
         "message": "Hello, good morning!",
-        "from": "user1@gmail.com",
+        "from": "franciscoigor@gmail.com",
         "to": "user2@gmail.com",
         "visible": 1
     },
@@ -17,14 +17,14 @@
         "timestamp": 1543027429715,
         "message": "How are you?",
         "from": "user2@gmail.com",
-        "to": "user1@gmail.com",
+        "to": "franciscoigor@gmail.com",
         "visible": 1
     },
     {
         "timestamp": 1543027427715,
         "message": "Are you there? I've been looking for you from yesterday. Please drop me a message!",
         "from": "user3@gmail.com",
-        "to": "user1@gmail.com",
+        "to": "franciscoigor@gmail.com",
         "visible": 1
     }
 ]
