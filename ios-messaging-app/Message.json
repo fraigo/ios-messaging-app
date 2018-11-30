@@ -7,6 +7,13 @@
         "visible": 1
     },
     {
+        "timestamp": 1543027277792,
+        "message": "Are you still there?",
+        "from": "user1@gmail.com",
+        "to": "franciscoigor@gmail.com",
+        "visible": 1
+    },
+    {
         "timestamp": 1543027420561,
         "message": "Hello, good morning!",
         "from": "franciscoigor@gmail.com",

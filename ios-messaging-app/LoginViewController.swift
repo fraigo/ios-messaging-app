@@ -12,6 +12,8 @@ import GoogleSignIn
 class LoginViewController: UIViewController, GIDSignInUIDelegate {
 
     @IBOutlet weak var loginLabel: UILabel!
+    @IBOutlet weak var googleButton: GIDSignInButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         GIDSignIn.sharedInstance().uiDelegate = self
@@ -31,8 +33,18 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate {
     */
     
     override func viewDidAppear(_ animated: Bool) {
+        updateLogin()
+    }
+    
+    func updateLogin(){
+        print("Checking login")
         if let user = DataSource.currentUser {
             loginLabel.text = "Signed In as " + user.email
+            googleButton.isHidden = true
+        }else{
+            DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                self.updateLogin()
+            }
         }
     }
 

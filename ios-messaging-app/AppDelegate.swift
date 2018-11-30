@@ -124,6 +124,7 @@ extension AppDelegate : GIDSignInDelegate {
              */
             let appUser = User(name: user.profile.name, email: user.profile.email, token: user.authentication.idToken)
             DataSource.currentUser = appUser
+            print("Signed in as \(user.profile.email ?? "[n/a]" )")
         }
     }
     

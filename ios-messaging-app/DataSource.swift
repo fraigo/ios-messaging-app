@@ -11,21 +11,36 @@ import CoreData
 
 class DataSource: NSObject {
     
-    static var senders: [NSManagedObject] = []
-    static var messages: [NSManagedObject] = []
+    static var data: [String: [NSManagedObject]] = [:]
     static var currentUser: User!
     
     static func loadData(){
-        senders = reLoadData(entity: "Sender")
-        messages = reLoadData(entity: "Message")
+        deleteEntities(entity: "Message")
+        let url1 = "https://fraigo.github.io/ios-messaging-app/ios-messaging-app/Message.json?email=" + currentUser.email
+        loadDataFromUrl(url : url1, entity: "Message")
+        
+        deleteEntities(entity: "Sender")
+        let url2 = "https://fraigo.github.io/ios-messaging-app/ios-messaging-app/Sender?email=" + currentUser.email
+        loadDataFromUrl(url : url2, entity: "Sender")
         
     }
     
-    static func reLoadData(entity: String) -> [NSManagedObject]{
+    static func loadDataFromUrl(url: String,entity: String){
+        let url = ""
+        getJsonFromUrl(url: url) { (data) in
+            let data = parseArray(data: data)
+            DispatchQueue.main.async{
+                DataSource.deleteEntities(entity: entity)
+                DataSource.loadEntities(entity: entity, data: data)
+            }
+            
+        }
+    
+    }
+    
+    static func reLoadData(entity: String){
         deleteEntities(entity: entity)
         let contents = loadEntities(entity: entity, data: arrayFromJsonFromFile(name: entity))
-        //print(contents)
-        return contents
     }
     
     static func filterMessagesOf(email: String) -> [NSManagedObject]{
@@ -51,7 +66,7 @@ class DataSource: NSObject {
         return appDelegate.persistentContainer.viewContext
     }
     
-    static func loadEntities(entity: String, data: NSArray) -> [NSManagedObject]{
+    static func loadEntities(entity: String, data: NSArray) {
         
         var entities: [NSManagedObject] = []
         if let managedContext = getViewContext(){
@@ -68,12 +83,12 @@ class DataSource: NSObject {
                     entities = try managedContext.fetch(fetchRequest)
                 }
             } catch let error as NSException {
-                print("Could not fetch \(entity): \(error), \(error.userInfo)")
+                print("Could not fetch \(entity): \(error)")
             } catch let error as NSError {
                 print("Could not fetch \(entity): \(error), \(error.userInfo)")
             }
         }
-        return entities
+        self.data[entity] = entities
     }
     
     static func filterEntities(entity: String, predicate: NSPredicate) -> [NSManagedObject]{

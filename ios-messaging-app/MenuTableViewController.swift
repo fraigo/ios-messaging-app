@@ -24,18 +24,9 @@ class MenuTableViewController: UITableViewController {
         
         DataSource.loadData()
         
-        
+        updateLogin()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        if let user = DataSource.currentUser {
-            senders = DataSource.filterField(entity: "Sender", field: "email", value: user.email, operation: "<>")
-        }else{
-            senders = []
-        }
-        self.tableView.reloadData()
-    }
-
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -99,8 +90,7 @@ class MenuTableViewController: UITableViewController {
         let email = viewCell.object.value(forKey: "email") as! String
         print("Selected \(email)")
         let newView = segue.destination as! MainViewController
-        let messages = DataSource.filterMessagesOf(email: email)
-        newView.setMessages(messages, email: email)
+        newView.setMessages(email: email)
     }
     
     
@@ -108,7 +98,21 @@ class MenuTableViewController: UITableViewController {
         print("Selected \(indexPath.row)")
         
     }
-
+    
+    func updateLogin(){
+        print("Checking login")
+        if let user = DataSource.currentUser {
+                senders = DataSource.filterField(entity: "Sender", field: "email", value: user.email, operation: "<>")
+        }else{
+            DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                self.updateLogin()
+            }
+            senders = []
+        }
+        self.tableView.reloadData()
+    }
+    
+    
 }
 
 
