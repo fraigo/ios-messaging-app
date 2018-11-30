@@ -13,20 +13,30 @@ class DataSource: NSObject {
     
     static var data: [String: [NSManagedObject]] = [:]
     static var currentUser: User!
+    static var endpointURL = "https://fraigo.github.io/ios-messaging-app/ios-messaging-app/"
     
     static func loadData(){
-        deleteEntities(entity: "Message")
-        let url1 = "https://fraigo.github.io/ios-messaging-app/ios-messaging-app/Message.json?email=" + currentUser.email
-        loadDataFromUrl(url : url1, entity: "Message")
-        
-        deleteEntities(entity: "Sender")
-        let url2 = "https://fraigo.github.io/ios-messaging-app/ios-messaging-app/Sender?email=" + currentUser.email
-        loadDataFromUrl(url : url2, entity: "Sender")
+        if let user = currentUser {
+            print("Loading URLs")
+            deleteEntities(entity: "Message")
+            let url1 = endpointURL + "Message.json?email=" + user.email
+            loadDataFromUrl(url : url1, entity: "Message")
+            
+            deleteEntities(entity: "Sender")
+            let url2 = endpointURL + "Sender.json?email=" + user.email
+            loadDataFromUrl(url : url2, entity: "Sender")
+        }
         
     }
     
+    static func autoUpdate(){
+        loadData()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
+            self.autoUpdate()
+        }
+    }
+    
     static func loadDataFromUrl(url: String,entity: String){
-        let url = ""
         getJsonFromUrl(url: url) { (data) in
             let data = parseArray(data: data)
             DispatchQueue.main.async{

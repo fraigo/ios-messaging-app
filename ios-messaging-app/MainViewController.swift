@@ -54,7 +54,7 @@ class MainViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyBoardDidShow(notification:)), name: UIResponder.keyboardDidShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyBoardDidHide(notification:)), name: UIResponder.keyboardDidHideNotification, object: nil)
         
-
+        updateMessages()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -75,6 +75,18 @@ class MainViewController: UIViewController {
     @objc func keyBoardDidHide(notification: NSNotification) {
         print("keyboard")
         keyboardSpace.isHidden = true
+    }
+    
+    func updateMessages(){
+        if let user = DataSource.currentUser {
+            print("Checking messages " + user.email)
+            setMessages(email: self.email)
+            tableView.reloadData()
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
+            self.updateMessages()
+        }
+    
     }
 
 

@@ -28,9 +28,9 @@
         "visible": 1
     },
     {
-        "timestamp": 1543027427715,
-        "message": "Are you there? I've been looking for you from yesterday. Please drop me a message!",
-        "from": "user3@gmail.com",
+        "timestamp": 1543027427795,
+        "message": "Test Message",
+        "from": "another@gmail.com",
         "to": "franciscoigor@gmail.com",
         "visible": 1
     }

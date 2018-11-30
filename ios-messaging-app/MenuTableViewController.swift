@@ -21,9 +21,8 @@ class MenuTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
-        
-        DataSource.loadData()
-        
+    
+        DataSource.autoUpdate()
         updateLogin()
     }
     
@@ -87,7 +86,8 @@ class MenuTableViewController: UITableViewController {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let viewCell = sender as! MenuTableViewCell
-        let email = viewCell.object.value(forKey: "email") as! String
+        let value = viewCell.object.value(forKey: "email")
+        let email = value as! String
         print("Selected \(email)")
         let newView = segue.destination as! MainViewController
         newView.setMessages(email: email)
@@ -102,14 +102,31 @@ class MenuTableViewController: UITableViewController {
     func updateLogin(){
         print("Checking login")
         if let user = DataSource.currentUser {
-                senders = DataSource.filterField(entity: "Sender", field: "email", value: user.email, operation: "<>")
+            updateSenders()
         }else{
             DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
                 self.updateLogin()
             }
             senders = []
+            self.tableView.reloadData()
         }
-        self.tableView.reloadData()
+        
+    }
+    
+    func updateSenders(){
+        if let user = DataSource.currentUser {
+            print("Checking senders ")
+            let newSenders = DataSource.filterField(entity: "Sender", field: "email", value: user.email, operation: "<>")
+            if (newSenders.count>0){
+                self.senders = newSenders
+                print("Updating senders \(newSenders.count)")
+                self.tableView.reloadData()
+            }
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
+            self.updateSenders()
+        }
+        
     }
     
     
