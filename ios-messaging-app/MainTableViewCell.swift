@@ -12,7 +12,6 @@ import CoreData
 class MainTableViewCell: UITableViewCell {
 
     
-    @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var messageContent: UITextView!
     @IBOutlet weak var senderLabel: UILabel!
     
@@ -22,6 +21,9 @@ class MainTableViewCell: UITableViewCell {
     func setMessage(_ message: NSManagedObject, email: String){
         self.message = message
         self.email = email
+        if (messageContent != nil){
+            updateView()
+        }
     }
     
     override func didMoveToWindow() {
@@ -29,14 +31,17 @@ class MainTableViewCell: UITableViewCell {
     }
     
     func updateView(){
+        print("Update message cell")
+        print(message!.value(forKey: "from") ?? "No/MSG" )
+        
         if let from = message!.value(forKey: "from") as? String {
             senderLabel.text = " " + from + " "
+            messageContent.text = message!.value(forKey: "message") as! String
             let sender = DataSource.filterField(entity: "Sender", field: "email", value: from)
             if sender.count>0 {
                 let name = sender[0].value(forKey: "name") as! String
                 senderLabel.text = " " + name + " (" + from + ")"
             }
-            messageContent.text = message!.value(forKey: "message") as? String
             if (from == self.email){
                 messageContent.textAlignment = .left
                 senderLabel.textAlignment = .left

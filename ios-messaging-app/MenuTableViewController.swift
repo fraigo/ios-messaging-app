@@ -23,7 +23,8 @@ class MenuTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     
         DataSource.autoUpdate()
-        updateLogin()
+        DataSource.addDataSourceDelegate(self)
+        
     }
     
     // MARK: - Table view data source
@@ -42,7 +43,7 @@ class MenuTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SenderCell", for: indexPath) as! MenuTableViewCell
         cell.setItem(senders[indexPath.row])
-
+        print("get cell \(indexPath.row)")
         return cell
     }
     
@@ -87,6 +88,10 @@ class MenuTableViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let viewCell = sender as! MenuTableViewCell
         let value = viewCell.object.value(forKey: "email")
+        if (value == nil){
+            tableView.reloadData()
+            return
+        }
         let email = value as! String
         print("Selected \(email)")
         let newView = segue.destination as! MainViewController
@@ -99,39 +104,24 @@ class MenuTableViewController: UITableViewController {
         
     }
     
-    func updateLogin(){
-        print("Checking login")
-        if let user = DataSource.currentUser {
-            updateSenders()
-        }else{
-            DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-                self.updateLogin()
-            }
-            senders = []
-            self.tableView.reloadData()
-        }
-        
-    }
-    
-    func updateSenders(){
-        if let user = DataSource.currentUser {
-            print("Checking senders ")
-            let newSenders = DataSource.filterField(entity: "Sender", field: "email", value: user.email, operation: "<>")
-            if (newSenders.count>0){
-                self.senders = newSenders
-                print("Updating senders \(newSenders.count)")
-                self.tableView.reloadData()
-            }
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
-            self.updateSenders()
-        }
-        
-    }
-    
+
     
 }
 
+
+extension MenuTableViewController : DataSourceDelegate {
+    
+    func DataSourceLoaded() {
+        if let user = DataSource.currentUser {
+            let newSenders = DataSource.filterField(entity: "Sender", field: "email", value: user.email, operation: "<>")
+            print("Updating senders \(newSenders.count)")
+            if (newSenders.count>0){
+                self.senders = newSenders
+                self.tableView.reloadData()
+            }
+        }
+    }
+}
 
 
 extension MenuTableViewController : UISplitViewControllerDelegate {

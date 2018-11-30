@@ -19,6 +19,9 @@ class MenuTableViewCell: UITableViewCell {
     
     func setItem(_ obj: NSManagedObject){
         self.object = obj
+        if (senderName != nil){
+            updateView()
+        }
     }
     
     override func didMoveToWindow() {
@@ -27,6 +30,7 @@ class MenuTableViewCell: UITableViewCell {
     
     func updateView(){
         if let item = object {
+            print(item.value(forKey: "name") ?? "N/A")
             senderName.text = item.value(forKey: "name") as? String
             senderStatus.text = item.value(forKey: "email") as? String
         }

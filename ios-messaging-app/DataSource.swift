@@ -14,24 +14,31 @@ class DataSource: NSObject {
     static var data: [String: [NSManagedObject]] = [:]
     static var currentUser: User!
     static var endpointURL = "https://fraigo.github.io/ios-messaging-app/ios-messaging-app/"
+    static var isUpdating = 0
+    static var delegates = [DataSourceDelegate]()
+    static var nextTime = 20.0
     
     static func loadData(){
         if let user = currentUser {
-            print("Loading URLs")
-            deleteEntities(entity: "Message")
-            let url1 = endpointURL + "Message.json?email=" + user.email
+            nextTime = 20.0
+            let timestamp = Date.init().timeIntervalSince1970
+            
+            print("Loading URLs \(timestamp)")
+            isUpdating = 0
+            let url1 = endpointURL + "Message.json?email=" + user.email + "&t=\(timestamp)"
             loadDataFromUrl(url : url1, entity: "Message")
             
-            deleteEntities(entity: "Sender")
-            let url2 = endpointURL + "Sender.json?email=" + user.email
+            let url2 = endpointURL + "Sender.json?email=" + user.email + "&t=\(timestamp)"
             loadDataFromUrl(url : url2, entity: "Sender")
+        }else{
+            nextTime = 2.0
         }
         
     }
     
     static func autoUpdate(){
         loadData()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + nextTime) {
             self.autoUpdate()
         }
     }
@@ -40,17 +47,28 @@ class DataSource: NSObject {
         getJsonFromUrl(url: url) { (data) in
             let data = parseArray(data: data)
             DispatchQueue.main.async{
-                DataSource.deleteEntities(entity: entity)
+                deleteEntities(entity: entity)
                 DataSource.loadEntities(entity: entity, data: data)
+                isUpdating += 1
+                if (isUpdating==2){
+                    print("Loaded URLs")
+                    for delegate in delegates{
+                        delegate.DataSourceLoaded()
+                    }
+                }
             }
             
         }
     
     }
     
+    static func addDataSourceDelegate(_ delegate:DataSourceDelegate){
+        delegates.append(delegate)
+    }
+    
     static func reLoadData(entity: String){
         deleteEntities(entity: entity)
-        let contents = loadEntities(entity: entity, data: arrayFromJsonFromFile(name: entity))
+        loadEntities(entity: entity, data: arrayFromJsonFromFile(name: entity))
     }
     
     static func filterMessagesOf(email: String) -> [NSManagedObject]{
@@ -158,5 +176,11 @@ class DataSource: NSObject {
     }
     
     
+    
+}
+
+protocol DataSourceDelegate {
+    
+    func DataSourceLoaded()
     
 }

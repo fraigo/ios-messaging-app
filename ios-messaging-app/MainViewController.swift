@@ -23,9 +23,13 @@ class MainViewController: UIViewController {
     
     func setMessages(email: String)
     {
-        let messages = DataSource.filterMessagesOf(email: email)
-        self.messages = messages
+        self.messages = DataSource.filterMessagesOf(email: email)
         self.email = email
+        print("Checking messages " + email + " \(self.messages.count)")
+        if (tableView != nil){
+            print("Updating messages \(email) \(messages.count)" )
+            tableView.reloadData()
+        }
         
     }
     
@@ -42,7 +46,6 @@ class MainViewController: UIViewController {
         
         DataSource.createEntity("Message", data: values)
         setMessages(email: self.email)
-        tableView.reloadData()
     }
     
     
@@ -51,15 +54,14 @@ class MainViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         tableView.delegate = self
         tableView.dataSource = self
+        DataSource.addDataSourceDelegate(self)
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyBoardDidShow(notification:)), name: UIResponder.keyboardDidShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyBoardDidHide(notification:)), name: UIResponder.keyboardDidHideNotification, object: nil)
-        
-        updateMessages()
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        tableView.reloadData()
         navigationController?.title = self.email
+        setMessages(email: email)
     }
     
     
@@ -77,19 +79,19 @@ class MainViewController: UIViewController {
         keyboardSpace.isHidden = true
     }
     
-    func updateMessages(){
-        if let user = DataSource.currentUser {
-            print("Checking messages " + user.email)
-            setMessages(email: self.email)
-            tableView.reloadData()
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
-            self.updateMessages()
-        }
+
+
+}
+
+
+
+extension MainViewController : DataSourceDelegate {
     
+    func DataSourceLoaded() {
+        if let user = DataSource.currentUser {
+            setMessages(email: self.email)
+        }
     }
-
-
 }
 
 
