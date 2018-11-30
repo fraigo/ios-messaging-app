@@ -33,5 +33,12 @@
         "from": "another@gmail.com",
         "to": "franciscoigor@gmail.com",
         "visible": 1
+    },
+    {
+        "timestamp": 1543027457795,
+        "message": "HEllloooo!!",
+        "from": "user3@gmail.com",
+        "to": "franciscoigor@gmail.com",
+        "visible": 1
     }
 ]
