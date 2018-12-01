@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Hpa-aF-WHq">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Hpa-aF-WHq">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -128,7 +129,7 @@
         <!--Login View Controller-->
         <scene sceneID="ryy-qZ-yp1">
             <objects>
-                <viewController id="iPR-l2-73Y" customClass="LoginViewController" customModule="ios_messaging_app" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginView" id="iPR-l2-73Y" customClass="LoginViewController" customModule="ios_messaging_app" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="EvC-2l-pNo">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -144,15 +145,28 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="messages-120.png" translatesAutoresizingMaskIntoConstraints="NO" id="ViA-IS-0SG">
-                                <rect key="frame" x="127.5" y="273.5" width="120" height="120"/>
+                                <rect key="frame" x="107.5" y="253.5" width="160" height="160"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="160" id="40U-ca-j7m"/>
+                                    <constraint firstAttribute="width" constant="160" id="UQS-JE-80D"/>
+                                </constraints>
                             </imageView>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jJt-l6-UgW">
+                                <rect key="frame" x="159" y="617" width="56" height="30"/>
+                                <state key="normal" title="SignOut"/>
+                                <connections>
+                                    <action selector="signOutClick:" destination="iPR-l2-73Y" eventType="touchUpInside" id="i0X-dr-8Sa"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Gft-1C-zQC" firstAttribute="centerX" secondItem="EvC-2l-pNo" secondAttribute="centerX" id="3Vc-c1-Sh5"/>
                             <constraint firstItem="T3a-mT-pYj" firstAttribute="centerX" secondItem="EvC-2l-pNo" secondAttribute="centerX" id="3pp-wz-yoD"/>
                             <constraint firstItem="ViA-IS-0SG" firstAttribute="centerX" secondItem="EvC-2l-pNo" secondAttribute="centerX" id="DIl-Xb-qmi"/>
+                            <constraint firstItem="pm4-kq-Aga" firstAttribute="bottom" secondItem="jJt-l6-UgW" secondAttribute="bottom" constant="20" id="NV1-3Z-Psk"/>
                             <constraint firstItem="pm4-kq-Aga" firstAttribute="bottom" secondItem="Gft-1C-zQC" secondAttribute="bottom" constant="60" id="UYp-q2-475"/>
+                            <constraint firstItem="jJt-l6-UgW" firstAttribute="centerX" secondItem="EvC-2l-pNo" secondAttribute="centerX" id="YyY-FU-j9k"/>
                             <constraint firstItem="ViA-IS-0SG" firstAttribute="centerY" secondItem="EvC-2l-pNo" secondAttribute="centerY" id="aCg-CS-tdI"/>
                             <constraint firstItem="Gft-1C-zQC" firstAttribute="top" secondItem="T3a-mT-pYj" secondAttribute="bottom" constant="30" id="znd-6i-nrx"/>
                         </constraints>
@@ -160,7 +174,9 @@
                     </view>
                     <connections>
                         <outlet property="googleButton" destination="T3a-mT-pYj" id="yed-a3-DyO"/>
+                        <outlet property="loginImage" destination="ViA-IS-0SG" id="uGT-hi-XDw"/>
                         <outlet property="loginLabel" destination="Gft-1C-zQC" id="95h-a7-efu"/>
+                        <outlet property="signOutButton" destination="jJt-l6-UgW" id="mUd-Zg-fHG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="opC-A9-dfZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -215,6 +231,7 @@
                                 <connections>
                                     <outlet property="senderName" destination="6K2-IR-AMF" id="lnr-wd-Wyu"/>
                                     <outlet property="senderStatus" destination="LdA-kg-PBW" id="sL1-rv-rmC"/>
+                                    <outlet property="userImage" destination="IFW-5b-whM" id="1dc-sQ-F1I"/>
                                     <segue destination="hxr-22-YDj" kind="showDetail" id="80C-vN-Gpv"/>
                                 </connections>
                             </tableViewCell>
@@ -261,7 +278,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="messages-120.png" width="120" height="120"/>
+        <image name="messages-120.png" width="167" height="167"/>
         <image name="user-icon.png" width="500" height="466"/>
     </resources>
 </document>

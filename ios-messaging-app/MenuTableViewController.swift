@@ -28,13 +28,53 @@ class MenuTableViewController: UITableViewController {
         let button = UIBarButtonItem()
         button.title = "Profile"
         button.action = #selector(viewProfile)
+        button.target = self
         navigationItem.rightBarButtonItem = button
+        
+        let button2 = UIBarButtonItem()
+        button2.title = "New"
+        button2.action = #selector(addNew)
+        button2.target = self
+        navigationItem.leftBarButtonItem = button2
     }
     
     
     @objc func viewProfile(){
         //performSegue(withIdentifier: "viewProfile", sender: self)
         print("Profile")
+        LoginViewController.show(current: self)
+    }
+    
+    @objc func addNew(){
+        let alert = UIAlertController(title: "New contact", message: "Enther the user", preferredStyle: .alert)
+        
+        alert.addTextField { (textField) in
+            textField.keyboardType = .emailAddress
+            textField.text = "@gmail.com"
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
+                let newPosition = textField.beginningOfDocument
+                textField.selectedTextRange = textField.textRange(from: newPosition, to: newPosition)
+            })
+            
+        }
+        
+        alert.addAction(UIAlertAction(title: "Message", style: .default, handler: { [weak alert] (_) in
+            if  let textField = alert?.textFields![0] {
+                if let email = textField.text {
+                    let values: NSDictionary = [
+                        "message" :  "Let's chat!",
+                        "to" :  email,
+                        "from" : DataSource.currentUser.email,
+                        "visible" : 1,
+                        "timestamp" : 123123
+                    ]
+                    DataSource.createMessage(data: values)
+                    DataSource.loadData()
+                }
+            }
+        }))
+        
+        self.present(alert, animated: true, completion: nil)
     }
     
     // MARK: - Table view data source

@@ -56,8 +56,10 @@ class MainViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         DataSource.addDataSourceDelegate(self)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyBoardDidShow(notification:)), name: UIResponder.keyboardDidShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyBoardDidHide(notification:)), name: UIResponder.keyboardDidHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyBoardDidShow(notification:)), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyBoardDidHide(notification:)), name: NSNotification.Name.UIKeyboardDidHide, object: nil)
+        
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -68,7 +70,7 @@ class MainViewController: UIViewController {
     
     @objc func keyBoardDidShow(notification: NSNotification) {
         print("keyboard")
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
             //let keyboardHeight = keyboardSize.height
             keyboardSpace.isHidden = false
             keyboardConstraint.constant = keyboardSize.height
@@ -89,7 +91,7 @@ class MainViewController: UIViewController {
 extension MainViewController : DataSourceDelegate {
     
     func DataSourceLoaded() {
-        if let user = DataSource.currentUser {
+        if DataSource.currentUser != nil {
             setMessages(email: self.email)
         }
     }
