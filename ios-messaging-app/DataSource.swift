@@ -13,7 +13,7 @@ class DataSource: NSObject {
     
     static var data: [String: [NSManagedObject]] = [:]
     static var currentUser: User!
-    static var endpointURL = "https://fraigo.github.io/ios-messaging-app/ios-messaging-app/"
+    static var endpointURL = "https://message-chat-api.herokuapp.com/index.php/"
     static var isUpdating = 0
     static var delegates = [DataSourceDelegate]()
     static var nextTime = 20.0
@@ -25,10 +25,11 @@ class DataSource: NSObject {
             
             print("Loading URLs \(timestamp)")
             isUpdating = 0
-            let url1 = endpointURL + "Message.json?email=" + user.email + "&t=\(timestamp)"
+            let url1 = endpointURL + "Message/get/" + user.email + "/?t=\(timestamp)"
+            print(url1)
             loadDataFromUrl(url : url1, entity: "Message")
             
-            let url2 = endpointURL + "Sender.json?email=" + user.email + "&t=\(timestamp)"
+            let url2 = endpointURL + "Sender/get/" + user.email + "/?t=\(timestamp)"
             loadDataFromUrl(url : url2, entity: "Sender")
         }else{
             nextTime = 2.0
@@ -40,6 +41,41 @@ class DataSource: NSObject {
         loadData()
         DispatchQueue.main.asyncAfter(deadline: .now() + nextTime) {
             self.autoUpdate()
+        }
+    }
+    
+    static func createMessage(data: NSDictionary){
+        createEntity("Message", data: data)
+        addMessage(message: data.value(forKey: "message") as! String, to: data.value(forKey: "to") as! String, from: data.value(forKey: "from") as! String)
+    }
+    
+    static func addMessage(message: String, to: String, from: String){
+        if let escapedMessage = message.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) {
+
+            if currentUser != nil {
+                let url1 = endpointURL + "Message/push/\(to)/?from=\(from)&message=\(escapedMessage)"
+                getJsonFromUrl(url: url1) { (data) in
+                    let data = parseString(data:data)
+                    print(data)
+                }
+            }
+        }
+        
+    }
+    
+    static func UrlEncode(text: String) -> String {
+        return text.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
+    }
+    
+    static func registerUser(){
+        let name=UrlEncode(text: currentUser.name)
+        let image=UrlEncode(text: currentUser.image)
+        if currentUser != nil {
+            let url1 = endpointURL + "User/register/\(currentUser.email)/?name=\(name)&imageUrl=\(image)"
+            getJsonFromUrl(url: url1) { (data) in
+                let data = parseString(data:data)
+                print(data)
+            }
         }
     }
     

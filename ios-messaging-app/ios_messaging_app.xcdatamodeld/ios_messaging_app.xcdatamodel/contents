@@ -10,11 +10,12 @@
     <entity name="Sender" representedClassName="Sender" syncable="YES" codeGenerationType="class">
         <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="imageUrl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="number" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Sender" positionX="-63" positionY="-18" width="128" height="105"/>
         <element name="Message" positionX="257.2890625" positionY="-21.80859375" width="128" height="120"/>
+        <element name="Sender" positionX="-63" positionY="-18" width="128" height="120"/>
     </elements>
 </model>

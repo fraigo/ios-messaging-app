@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         GIDSignIn.sharedInstance().clientID = "774131575761-67l97i1tp2ku1js2vktk6a48ni26nvmd.apps.googleusercontent.com"
         GIDSignIn.sharedInstance().delegate = self
-
+        
         return true
     }
     
@@ -122,8 +122,9 @@ extension AppDelegate : GIDSignInDelegate {
             let familyName = user.profile.familyName
             let email = user.profile.email
              */
-            let appUser = User(name: user.profile.name, email: user.profile.email, token: user.authentication.idToken)
+            let appUser = User(name: user.profile.name, email: user.profile.email, token: user.authentication.idToken, image: (user.profile.imageURL(withDimension: 200)?.absoluteString)!)
             DataSource.currentUser = appUser
+            DataSource.registerUser()
             print("Signed in as \(user.profile.email ?? "[n/a]" )")
         }
     }

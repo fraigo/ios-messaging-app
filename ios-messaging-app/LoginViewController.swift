@@ -40,7 +40,7 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate {
         print("Checking login")
         if let user = DataSource.currentUser {
             loginLabel.text = "Signed In as " + user.email
-            googleButton.isHidden = true
+            // googleButton.isHidden = true
         }else{
             DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
                 self.updateLogin()

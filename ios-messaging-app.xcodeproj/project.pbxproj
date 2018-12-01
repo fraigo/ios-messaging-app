@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		2D18D8E134559B5DC33F3C6B /* Pods_ios_messaging_app.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF7DF35F4898F9ABE17C94C6 /* Pods_ios_messaging_app.framework */; };
+		CE50386021B2280700B7BCE2 /* messages-120.png in Resources */ = {isa = PBXBuildFile; fileRef = CE50385F21B2280700B7BCE2 /* messages-120.png */; };
+		CE50386221B2392400B7BCE2 /* user-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = CE50386121B2392400B7BCE2 /* user-icon.png */; };
 		CE64A7AA21AD047700227DF4 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE64A7A921AD047700227DF4 /* LoginViewController.swift */; };
 		CE64A7AC21AD087A00227DF4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE64A7AB21AD087A00227DF4 /* User.swift */; };
 		CE65A76621A8C1D5000F314E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE65A76521A8C1D5000F314E /* AppDelegate.swift */; };
@@ -28,6 +30,8 @@
 
 /* Begin PBXFileReference section */
 		9F24E4894AB9696E9B87DE59 /* Pods-ios-messaging-app.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios-messaging-app.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ios-messaging-app/Pods-ios-messaging-app.debug.xcconfig"; sourceTree = "<group>"; };
+		CE50385F21B2280700B7BCE2 /* messages-120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "messages-120.png"; sourceTree = "<group>"; };
+		CE50386121B2392400B7BCE2 /* user-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user-icon.png"; sourceTree = "<group>"; };
 		CE64A7A921AD047700227DF4 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		CE64A7AB21AD087A00227DF4 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		CE65A76221A8C1D5000F314E /* ios-messaging-app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ios-messaging-app.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -100,6 +104,8 @@
 		CE65A76421A8C1D5000F314E /* ios-messaging-app */ = {
 			isa = PBXGroup;
 			children = (
+				CE50386121B2392400B7BCE2 /* user-icon.png */,
+				CE50385F21B2280700B7BCE2 /* messages-120.png */,
 				CE65A76521A8C1D5000F314E /* AppDelegate.swift */,
 				CE65A76721A8C1D5000F314E /* MainViewController.swift */,
 				CE65A78A21A9034D000F314E /* MainTableViewCell.swift */,
@@ -182,7 +188,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE50386221B2392400B7BCE2 /* user-icon.png in Resources */,
 				CE65A77321A8C1DC000F314E /* LaunchScreen.storyboard in Resources */,
+				CE50386021B2280700B7BCE2 /* messages-120.png in Resources */,
 				CE65A78721A8F08D000F314E /* Sender.json in Resources */,
 				CE65A77021A8C1DC000F314E /* Assets.xcassets in Resources */,
 				CE65A76B21A8C1D5000F314E /* Main.storyboard in Resources */,

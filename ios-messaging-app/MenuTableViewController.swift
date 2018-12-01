@@ -25,6 +25,16 @@ class MenuTableViewController: UITableViewController {
         DataSource.autoUpdate()
         DataSource.addDataSourceDelegate(self)
         
+        let button = UIBarButtonItem()
+        button.title = "Profile"
+        button.action = #selector(viewProfile)
+        navigationItem.rightBarButtonItem = button
+    }
+    
+    
+    @objc func viewProfile(){
+        //performSegue(withIdentifier: "viewProfile", sender: self)
+        print("Profile")
     }
     
     // MARK: - Table view data source

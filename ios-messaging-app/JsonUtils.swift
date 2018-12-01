@@ -51,6 +51,10 @@ func parseString(data: Data) -> String{
 
 
 func parseArray(data: Data) -> NSArray {
+    
+    if let string = String(data: data, encoding: String.Encoding.utf8){
+        print(string)
+    }
     if let jsonArray = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as! NSArray {
         return jsonArray
     }else{

@@ -44,8 +44,9 @@ class MainViewController: UIViewController {
             ]
         print(values)
         
-        DataSource.createEntity("Message", data: values)
+        DataSource.createMessage(data: values)
         setMessages(email: self.email)
+        messageField.text = ""
     }
     
     
