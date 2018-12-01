@@ -16,11 +16,6 @@ class MenuTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
     
         DataSource.autoUpdate()
         DataSource.addDataSourceDelegate(self)
@@ -51,6 +46,7 @@ class MenuTableViewController: UITableViewController {
         alert.addTextField { (textField) in
             textField.keyboardType = .emailAddress
             textField.text = "@gmail.com"
+            textField.font = UIFont.systemFont(ofSize: 20)
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
                 let newPosition = textField.beginningOfDocument
                 textField.selectedTextRange = textField.textRange(from: newPosition, to: newPosition)
@@ -66,7 +62,7 @@ class MenuTableViewController: UITableViewController {
                         "to" :  email,
                         "from" : DataSource.currentUser.email,
                         "visible" : 1,
-                        "timestamp" : 123123
+                        "timestamp" : NSDate().timeIntervalSince1970
                     ]
                     DataSource.createMessage(data: values)
                     DataSource.loadData()
@@ -86,6 +82,7 @@ class MenuTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
+        navigationItem.title = "Messages (\(senders.count))"
         return senders.count
     }
 
@@ -165,10 +162,8 @@ extension MenuTableViewController : DataSourceDelegate {
         if let user = DataSource.currentUser {
             let newSenders = DataSource.filterField(entity: "Sender", field: "email", value: user.email, operation: "<>")
             print("Updating senders \(newSenders.count)")
-            if (newSenders.count>0){
-                self.senders = newSenders
-                self.tableView.reloadData()
-            }
+            self.senders = newSenders
+            self.tableView.reloadData()
         }
     }
 }

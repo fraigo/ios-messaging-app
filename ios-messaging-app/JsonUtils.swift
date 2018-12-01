@@ -101,3 +101,10 @@ func setImage(name: String, imageView: UIImageView) {
     }
 }
 
+func localTime(timestamp: UInt) -> Date{
+    let date = Date(timeIntervalSince1970: Double(timestamp))
+    let timezone = NSTimeZone.local
+    let seconds = Double(timezone.secondsFromGMT())
+    return Date(timeInterval: seconds, since: date as Date)
+}
+

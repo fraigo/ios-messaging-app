@@ -30,6 +30,8 @@ class MenuTableViewCell: UITableViewCell {
     }
     
     func updateView(){
+        userImage.layer.cornerRadius = userImage.frame.width/2
+        userImage.clipsToBounds = true
         if let item = object {
             let imageUrl = item.value(forKey: "imageUrl") as? String
             print(item.value(forKey: "name") ?? "N/A")

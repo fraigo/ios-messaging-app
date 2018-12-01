@@ -8,12 +8,14 @@
 
 import UIKit
 import CoreData
+import DateToolsSwift
 
 class MainTableViewCell: UITableViewCell {
 
     
     @IBOutlet weak var messageContent: UITextView!
     @IBOutlet weak var senderLabel: UILabel!
+    @IBOutlet weak var timestampLabel: UILabel!
     
     var message : NSManagedObject!
     var email : String = ""
@@ -56,6 +58,10 @@ class MainTableViewCell: UITableViewCell {
                 messageContent.backgroundColor = senderLabel.backgroundColor
                 senderLabel.textColor = UIColor.init(red: 0.0, green: 0.0, blue: 0.9, alpha: 0.8)
             }
+            
+            let timestamp = message.value(forKey: "timestamp") as? UInt
+            let date = localTime(timestamp: timestamp!)
+            timestampLabel.text = date.timeAgoSinceNow
         }
         
         senderLabel.layer.cornerRadius = 5;
