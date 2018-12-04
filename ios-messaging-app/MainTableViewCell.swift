@@ -33,12 +33,11 @@ class MainTableViewCell: UITableViewCell {
     }
     
     func updateView(){
-        print("Update message cell")
-        print(message!.value(forKey: "from") ?? "No/MSG" )
+        //print(message!.value(forKey: "from") ?? "No/MSG" )
         
         if let from = message!.value(forKey: "from") as? String {
             senderLabel.text = " " + from + " "
-            messageContent.text = message!.value(forKey: "message") as! String
+            messageContent.text = message!.value(forKey: "message") as? String
             let sender = DataSource.filterField(entity: "Sender", field: "email", value: from)
             if sender.count>0 {
                 let name = sender[0].value(forKey: "name") as! String
@@ -60,7 +59,7 @@ class MainTableViewCell: UITableViewCell {
             }
             
             let timestamp = message.value(forKey: "timestamp") as? UInt
-            let date = localTime(timestamp: timestamp!)
+            let date = Date(timeIntervalSince1970: Double(timestamp!))
             timestampLabel.text = date.timeAgoSinceNow
         }
         
@@ -83,7 +82,7 @@ class MainTableViewCell: UITableViewCell {
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
+        //super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
     }

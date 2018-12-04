@@ -17,6 +17,7 @@ class DataSource: NSObject {
     static var isUpdating = 0
     static var delegates = [DataSourceDelegate]()
     static var nextTime = 20.0
+    static var token = ""
     
     static func loadData(){
         if let user = currentUser {
@@ -54,7 +55,7 @@ class DataSource: NSObject {
 
             if currentUser != nil {
                 let url1 = endpointURL + "Message/push/\(to)/?from=\(from)&message=\(escapedMessage)"
-                getJsonFromUrl(url: url1) { (data) in
+                getJsonFromUrl(url: url1, token: currentUser.token) { (data) in
                     let data = parseString(data:data)
                     print(data)
                 }
@@ -72,7 +73,7 @@ class DataSource: NSObject {
         let image=UrlEncode(text: currentUser.image)
         if currentUser != nil {
             let url1 = endpointURL + "User/register/\(currentUser.email)/?name=\(name)&imageUrl=\(image)"
-            getJsonFromUrl(url: url1) { (data) in
+            getJsonFromUrl(url: url1, token: currentUser.token) { (data) in
                 let data = parseString(data:data)
                 print(data)
             }
@@ -80,7 +81,7 @@ class DataSource: NSObject {
     }
     
     static func loadDataFromUrl(url: String,entity: String){
-        getJsonFromUrl(url: url) { (data) in
+        getJsonFromUrl(url: url, token: currentUser.token) { (data) in
             let data = parseArray(data: data)
             DispatchQueue.main.async{
                 deleteEntities(entity: entity)

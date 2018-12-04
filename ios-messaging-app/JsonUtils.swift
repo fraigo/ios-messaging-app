@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import GoogleSignIn
 
 
 func arrayFromJsonFromFile(name: String) -> NSArray{
@@ -24,14 +24,26 @@ func arrayFromJsonFromFile(name: String) -> NSArray{
 }
 
 func getJsonFromUrl(url: String, onComplete: @escaping (Data) -> Void ) {
+    getJsonFromUrl(url: url, token: "", onComplete: onComplete)
+}
+
+func getJsonFromUrl(url: String, token: String, onComplete: @escaping (Data) -> Void ) {
     //creating a NSURL
     let dataURL : String = url
-    let url = NSURL(string: dataURL)
+    let url = URL(string: dataURL)
+    
+    var request = URLRequest(url: url!)
+    if (token != ""){
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authentication")
+        let id_client = GIDSignIn.sharedInstance().clientID
+        request.setValue(id_client, forHTTPHeaderField: "Client")
+    }
     
     //fetching the data from the url
-    URLSession.shared.dataTask(with: (url as URL?)!, completionHandler: {(data, response, error) -> Void in
+    URLSession.shared.dataTask(with: request, completionHandler: {(data, response, error) -> Void in
         
         if error != nil {
+            print("Error:")
             print(error!)
         } else {
             if let usableData = data {
@@ -53,7 +65,14 @@ func parseString(data: Data) -> String{
 func parseArray(data: Data) -> NSArray {
     
     if let string = String(data: data, encoding: String.Encoding.utf8){
+        if (string.lengthOfBytes(using: .utf8)==0){
+            print("Empty Data")
+            return NSArray()
+        }
         print(string)
+    }else{
+        print("Invalid data:")
+        return NSArray()
     }
     if let jsonArray = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as! NSArray {
         return jsonArray

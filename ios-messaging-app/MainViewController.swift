@@ -23,12 +23,17 @@ class MainViewController: UIViewController {
     
     func setMessages(email: String)
     {
+        let oldCount = messages.count
         self.messages = DataSource.filterMessagesOf(email: email)
         self.email = email
-        print("Checking messages " + email + " \(self.messages.count)")
         if (tableView != nil){
             print("Updating messages \(email) \(messages.count)" )
             tableView.reloadData()
+            if (oldCount != messages.count){
+                let indexPath = IndexPath(row: messages.count - 1, section: 0)
+                tableView.selectRow(at: indexPath, animated: true, scrollPosition: .bottom)
+                self.tableView.scrollToNearestSelectedRow(at: .bottom, animated: true)
+            }
         }
         
     }
@@ -40,7 +45,7 @@ class MainViewController: UIViewController {
             "to" :  self.email,
             "from" : DataSource.currentUser.email,
             "visible" : 1,
-            "timestamp" : 123
+            "timestamp" : NSDate().timeIntervalSince1970
             ]
         print(values)
         
@@ -56,8 +61,8 @@ class MainViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         DataSource.addDataSourceDelegate(self)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyBoardDidShow(notification:)), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyBoardDidHide(notification:)), name: NSNotification.Name.UIKeyboardDidHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyBoardDidShow(notification:)), name: UIResponder.keyboardDidShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyBoardDidHide(notification:)), name: UIResponder.keyboardDidHideNotification, object: nil)
         
         
     }
@@ -70,10 +75,11 @@ class MainViewController: UIViewController {
     
     @objc func keyBoardDidShow(notification: NSNotification) {
         print("keyboard")
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
             //let keyboardHeight = keyboardSize.height
             keyboardSpace.isHidden = false
             keyboardConstraint.constant = keyboardSize.height
+            self.tableView.setContentOffset(CGPoint(x:0, y:self.tableView.contentSize.height + 200.0), animated: false)
         }
     }
     
@@ -114,7 +120,7 @@ extension MainViewController : UITableViewDataSource {
         return cell
     }
     
-
+    
     
     
 }
