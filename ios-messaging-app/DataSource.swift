@@ -11,87 +11,111 @@ import CoreData
 
 class DataSource: NSObject {
     
+    static var id_client = ""
+    static var headers = Dictionary<String, String>()
+    static var delegates : NSMutableArray = NSMutableArray()
     static var data: [String: [NSManagedObject]] = [:]
-    static var currentUser: User!
-    static var endpointURL = "https://message-chat-api.herokuapp.com/index.php/"
-    static var isUpdating = 0
-    static var delegates = [DataSourceDelegate]()
-    static var nextTime = 20.0
-    static var token = ""
     
-    static func loadData(){
-        if let user = currentUser {
-            nextTime = 20.0
-            let timestamp = Date.init().timeIntervalSince1970
-            
-            print("Loading URLs \(timestamp)")
-            isUpdating = 0
-            let url1 = endpointURL + "Message/get/" + user.email + "/?t=\(timestamp)"
-            print(url1)
-            loadDataFromUrl(url : url1, entity: "Message")
-            
-            let url2 = endpointURL + "Sender/get/" + user.email + "/?t=\(timestamp)"
-            loadDataFromUrl(url : url2, entity: "Sender")
-        }else{
-            nextTime = 2.0
+    static func arrayFromJsonFile(name: String) -> NSArray{
+        do {
+            if let filepath = Bundle.main.path(forResource: name, ofType: "json") {
+                let contents = try String(contentsOfFile: filepath)
+                return DataSource.parseJsonArray(data: contents.data(using: .utf8)!)
+            }
+        } catch {
+            // contents could not be loaded
+            print("Error parsing JSON data")
+        }
+        return NSArray()
+    }
+    
+    static func setAuthenticationBearer(value: String){
+        setAuthenticationHeader(type: "Bearer", value: value)
+    }
+        
+    
+    static func setAuthenticationHeader(type: String, value: String){
+        headers["Authentication"] = "\(type) \(value)"
+    }
+    
+    static func getJsonFromUrl(url: String, onComplete: @escaping (Data) -> Void ) {
+        getJsonFromUrl(url: url, headers: headers, onComplete: onComplete)
+    }
+    
+    static func getJsonFromUrl(url: String, headers: Dictionary<String, String>, onComplete: @escaping (Data) -> Void ) {
+        //creating a NSURL
+        let dataURL : String = url
+        let url = URL(string: dataURL)
+        
+        var request = URLRequest(url: url!)
+        for key in headers.keys {
+            request.setValue(headers[key], forHTTPHeaderField: key)
         }
         
-    }
-    
-    static func autoUpdate(){
-        loadData()
-        DispatchQueue.main.asyncAfter(deadline: .now() + nextTime) {
-            self.autoUpdate()
-        }
-    }
-    
-    static func createMessage(data: NSDictionary){
-        createEntity("Message", data: data)
-        addMessage(message: data.value(forKey: "message") as! String, to: data.value(forKey: "to") as! String, from: data.value(forKey: "from") as! String)
-    }
-    
-    static func addMessage(message: String, to: String, from: String){
-        if let escapedMessage = message.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) {
-
-            if currentUser != nil {
-                let url1 = endpointURL + "Message/push/\(to)/?from=\(from)&message=\(escapedMessage)"
-                getJsonFromUrl(url: url1, token: currentUser.token) { (data) in
-                    let data = parseString(data:data)
-                    print(data)
+        //fetching the data from the url
+        URLSession.shared.dataTask(with: request, completionHandler: {(data, response, error) -> Void in
+            
+            if error != nil {
+                print("Error:")
+                print(error!)
+            } else {
+                if let usableData = data {
+                    onComplete(usableData)
                 }
             }
+            
+        }).resume()
+    }
+    
+    static func parseString(data: Data) -> String{
+        if let string = String(data: data, encoding: String.Encoding.utf8){
+            return string
         }
+        return ""
+    }
+    
+    
+    static func parseJsonArray(data: Data) -> NSArray {
         
+        if let string = String(data: data, encoding: String.Encoding.utf8){
+            if (string.lengthOfBytes(using: .utf8)==0){
+                print("Empty Data")
+                return NSArray()
+            }
+            //print(string)
+        }else{
+            print("Invalid data:")
+            return NSArray()
+        }
+        if let jsonArray = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as! NSArray {
+            return jsonArray
+        }else{
+            print("Error trying to parse JSON")
+            return NSArray()
+        }
     }
     
-    static func UrlEncode(text: String) -> String {
-        return text.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
-    }
-    
-    static func registerUser(){
-        let name=UrlEncode(text: currentUser.name)
-        let image=UrlEncode(text: currentUser.image)
-        if currentUser != nil {
-            let url1 = endpointURL + "User/register/\(currentUser.email)/?name=\(name)&imageUrl=\(image)"
-            getJsonFromUrl(url: url1, token: currentUser.token) { (data) in
-                let data = parseString(data:data)
-                print(data)
+    static func parseDictionary(data: Data, sortKey: String, itemKey: String) -> NSArray {
+        if let jsonObj = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as? NSDictionary {
+            let descriptor: NSSortDescriptor = NSSortDescriptor(key: sortKey, ascending: false)
+            if let itemArray = jsonObj!.value(forKey: itemKey) as? NSArray {
+                let sortedResults: NSArray = itemArray.sortedArray(using: [descriptor]) as NSArray
+                return sortedResults
             }
         }
+        return NSArray()
     }
+
     
     static func loadDataFromUrl(url: String,entity: String){
-        getJsonFromUrl(url: url, token: currentUser.token) { (data) in
-            let data = parseArray(data: data)
+        getJsonFromUrl(url: url) { (data) in
+            let data = parseJsonArray(data: data)
             DispatchQueue.main.async{
                 deleteEntities(entity: entity)
                 DataSource.loadEntities(entity: entity, data: data)
-                isUpdating += 1
-                if (isUpdating==2){
-                    print("Loaded URLs")
-                    for delegate in delegates{
-                        delegate.DataSourceLoaded()
-                    }
+                for delegate in delegates{
+                    let dsDelegate = delegate as! DataSourceDelegate
+                    dsDelegate.DataSourceLoaded(entity: entity)
                 }
             }
             
@@ -100,18 +124,16 @@ class DataSource: NSObject {
     }
     
     static func addDataSourceDelegate(_ delegate:DataSourceDelegate){
-        delegates.append(delegate)
+        if (!delegates.contains(delegate)){
+            delegates.add(delegate)
+        }
     }
     
-    static func reLoadData(entity: String){
+    static func loadDataFromJson(entity: String){
         deleteEntities(entity: entity)
-        loadEntities(entity: entity, data: arrayFromJsonFromFile(name: entity))
+        loadEntities(entity: entity, data: arrayFromJsonFile(name: entity))
     }
     
-    static func filterMessagesOf(email: String) -> [NSManagedObject]{
-        let predicate = NSPredicate(format: "from = %@ or to = %@", email, email)
-        return filterEntities(entity: "Message", predicate: predicate)
-    }
     
     static func filterField(entity: String, field: String, value: Any) -> [NSManagedObject]
     {
@@ -156,12 +178,19 @@ class DataSource: NSObject {
         self.data[entity] = entities
     }
     
-    static func filterEntities(entity: String, predicate: NSPredicate) -> [NSManagedObject]{
+    static func getEntities(entity: String) -> [NSManagedObject]
+    {
+        return filterEntities(entity: entity, predicate: nil)
+    }
+
+    static func filterEntities(entity: String, predicate: NSPredicate?) -> [NSManagedObject]{
         
         var entities: [NSManagedObject] = []
         if let managedContext = getViewContext(){
             let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entity)
-            fetchRequest.predicate = predicate
+            if (predicate != nil){
+                fetchRequest.predicate = predicate
+            }
             do {
                 entities = try managedContext.fetch(fetchRequest)
                 
@@ -172,12 +201,19 @@ class DataSource: NSObject {
         return entities
     }
     
-    
     static func deleteEntities(entity: String){
+        deleteEntities(entity: entity, predicate: nil)
+    }
+        
+    
+    static func deleteEntities(entity: String, predicate: NSPredicate?){
         
         var entities: [NSManagedObject] = []
         if let managedContext = getViewContext(){
             let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entity)
+            if (predicate != nil){
+                fetchRequest.predicate = predicate
+            }
             do {
                 entities = try managedContext.fetch(fetchRequest)
                 if (entities.count > 0){
@@ -218,6 +254,6 @@ class DataSource: NSObject {
 
 protocol DataSourceDelegate {
     
-    func DataSourceLoaded()
+    func DataSourceLoaded(entity: String)
     
 }

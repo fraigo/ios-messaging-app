@@ -10,6 +10,11 @@
 		2D18D8E134559B5DC33F3C6B /* Pods_ios_messaging_app.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF7DF35F4898F9ABE17C94C6 /* Pods_ios_messaging_app.framework */; };
 		CE50386021B2280700B7BCE2 /* messages-120.png in Resources */ = {isa = PBXBuildFile; fileRef = CE50385F21B2280700B7BCE2 /* messages-120.png */; };
 		CE50386221B2392400B7BCE2 /* user-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = CE50386121B2392400B7BCE2 /* user-icon.png */; };
+		CE5373B221BBAD5D00839AA6 /* NewMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5373B121BBAD5D00839AA6 /* NewMessageViewController.swift */; };
+		CE5373B421BBB6F100839AA6 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = CE5373B321BBB6F100839AA6 /* README.md */; };
+		CE5699E521B996C70065D222 /* AppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5699E421B996C70065D222 /* AppData.swift */; };
+		CE5699E821B9BFE20065D222 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5699E721B9BFE20065D222 /* UIView.swift */; };
+		CE5699EA21B9C2DB0065D222 /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5699E921B9C2DB0065D222 /* UIImageView.swift */; };
 		CE64A7AA21AD047700227DF4 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE64A7A921AD047700227DF4 /* LoginViewController.swift */; };
 		CE64A7AC21AD087A00227DF4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE64A7AB21AD087A00227DF4 /* User.swift */; };
 		CE65A76621A8C1D5000F314E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE65A76521A8C1D5000F314E /* AppDelegate.swift */; };
@@ -20,18 +25,23 @@
 		CE65A77321A8C1DC000F314E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE65A77121A8C1DC000F314E /* LaunchScreen.storyboard */; };
 		CE65A77B21A8DCD2000F314E /* MenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE65A77A21A8DCD2000F314E /* MenuTableViewController.swift */; };
 		CE65A77D21A8E8E2000F314E /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE65A77C21A8E8E2000F314E /* DataSource.swift */; };
-		CE65A77F21A8EE82000F314E /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE65A77E21A8EE82000F314E /* Extensions.swift */; };
-		CE65A78121A8EFE8000F314E /* JsonUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE65A78021A8EFE8000F314E /* JsonUtils.swift */; };
-		CE65A78521A8F074000F314E /* Message.json in Resources */ = {isa = PBXBuildFile; fileRef = CE65A78421A8F074000F314E /* Message.json */; };
-		CE65A78721A8F08D000F314E /* Sender.json in Resources */ = {isa = PBXBuildFile; fileRef = CE65A78621A8F08D000F314E /* Sender.json */; };
+		CE65A77F21A8EE82000F314E /* NSDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE65A77E21A8EE82000F314E /* NSDictionary.swift */; };
 		CE65A78921A8F629000F314E /* MenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE65A78821A8F629000F314E /* MenuTableViewCell.swift */; };
 		CE65A78B21A9034D000F314E /* MainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE65A78A21A9034D000F314E /* MainTableViewCell.swift */; };
+		CE790B1421BAD58A002FCB6F /* UIViewController.notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE790B1321BAD58A002FCB6F /* UIViewController.notifications.swift */; };
+		CE790B3E21BAF5C7002FCB6F /* AppDelegate.extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE790B3D21BAF5C7002FCB6F /* AppDelegate.extension.swift */; };
+		CE96AE5C21B65CE100FCE0E1 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE96AE5B21B65CE100FCE0E1 /* Utils.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		9F24E4894AB9696E9B87DE59 /* Pods-ios-messaging-app.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios-messaging-app.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ios-messaging-app/Pods-ios-messaging-app.debug.xcconfig"; sourceTree = "<group>"; };
 		CE50385F21B2280700B7BCE2 /* messages-120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "messages-120.png"; sourceTree = "<group>"; };
 		CE50386121B2392400B7BCE2 /* user-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user-icon.png"; sourceTree = "<group>"; };
+		CE5373B121BBAD5D00839AA6 /* NewMessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageViewController.swift; sourceTree = "<group>"; };
+		CE5373B321BBB6F100839AA6 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		CE5699E421B996C70065D222 /* AppData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppData.swift; sourceTree = "<group>"; };
+		CE5699E721B9BFE20065D222 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
+		CE5699E921B9C2DB0065D222 /* UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
 		CE64A7A921AD047700227DF4 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		CE64A7AB21AD087A00227DF4 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		CE65A76221A8C1D5000F314E /* ios-messaging-app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ios-messaging-app.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -44,12 +54,13 @@
 		CE65A77421A8C1DC000F314E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE65A77A21A8DCD2000F314E /* MenuTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableViewController.swift; sourceTree = "<group>"; };
 		CE65A77C21A8E8E2000F314E /* DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
-		CE65A77E21A8EE82000F314E /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
-		CE65A78021A8EFE8000F314E /* JsonUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonUtils.swift; sourceTree = "<group>"; };
-		CE65A78421A8F074000F314E /* Message.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Message.json; sourceTree = "<group>"; };
-		CE65A78621A8F08D000F314E /* Sender.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Sender.json; sourceTree = "<group>"; };
+		CE65A77E21A8EE82000F314E /* NSDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSDictionary.swift; sourceTree = "<group>"; };
 		CE65A78821A8F629000F314E /* MenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableViewCell.swift; sourceTree = "<group>"; };
 		CE65A78A21A9034D000F314E /* MainTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewCell.swift; sourceTree = "<group>"; };
+		CE790B1221BAD3E5002FCB6F /* ios-messaging-app.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "ios-messaging-app.entitlements"; sourceTree = "<group>"; };
+		CE790B1321BAD58A002FCB6F /* UIViewController.notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.notifications.swift; sourceTree = "<group>"; };
+		CE790B3D21BAF5C7002FCB6F /* AppDelegate.extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.extension.swift; sourceTree = "<group>"; };
+		CE96AE5B21B65CE100FCE0E1 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		CEB53243704BE244E8216364 /* Pods-ios-messaging-app.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios-messaging-app.release.xcconfig"; path = "Pods/Target Support Files/Pods-ios-messaging-app/Pods-ios-messaging-app.release.xcconfig"; sourceTree = "<group>"; };
 		CF7DF35F4898F9ABE17C94C6 /* Pods_ios_messaging_app.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ios_messaging_app.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -83,9 +94,31 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		CE5373B521BBBC2A00839AA6 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				CE50386121B2392400B7BCE2 /* user-icon.png */,
+				CE50385F21B2280700B7BCE2 /* messages-120.png */,
+			);
+			name = images;
+			sourceTree = "<group>";
+		};
+		CE5699E621B9BF400065D222 /* extensions */ = {
+			isa = PBXGroup;
+			children = (
+				CE65A77E21A8EE82000F314E /* NSDictionary.swift */,
+				CE5699E721B9BFE20065D222 /* UIView.swift */,
+				CE5699E921B9C2DB0065D222 /* UIImageView.swift */,
+				CE790B1321BAD58A002FCB6F /* UIViewController.notifications.swift */,
+				CE790B3D21BAF5C7002FCB6F /* AppDelegate.extension.swift */,
+			);
+			path = extensions;
+			sourceTree = "<group>";
+		};
 		CE65A75921A8C1D4000F314E = {
 			isa = PBXGroup;
 			children = (
+				CE5373B321BBB6F100839AA6 /* README.md */,
 				CE65A76421A8C1D5000F314E /* ios-messaging-app */,
 				CE65A76321A8C1D5000F314E /* Products */,
 				CAE6B577C3B3074FADD34CA3 /* Pods */,
@@ -104,25 +137,25 @@
 		CE65A76421A8C1D5000F314E /* ios-messaging-app */ = {
 			isa = PBXGroup;
 			children = (
-				CE50386121B2392400B7BCE2 /* user-icon.png */,
-				CE50385F21B2280700B7BCE2 /* messages-120.png */,
+				CE5373B521BBBC2A00839AA6 /* images */,
+				CE5699E621B9BF400065D222 /* extensions */,
 				CE65A76521A8C1D5000F314E /* AppDelegate.swift */,
 				CE65A76721A8C1D5000F314E /* MainViewController.swift */,
 				CE65A78A21A9034D000F314E /* MainTableViewCell.swift */,
 				CE65A77A21A8DCD2000F314E /* MenuTableViewController.swift */,
 				CE65A78821A8F629000F314E /* MenuTableViewCell.swift */,
-				CE65A76921A8C1D5000F314E /* Main.storyboard */,
-				CE65A76F21A8C1DC000F314E /* Assets.xcassets */,
-				CE65A77121A8C1DC000F314E /* LaunchScreen.storyboard */,
-				CE65A77421A8C1DC000F314E /* Info.plist */,
-				CE65A76C21A8C1D5000F314E /* ios_messaging_app.xcdatamodeld */,
-				CE65A77C21A8E8E2000F314E /* DataSource.swift */,
-				CE65A77E21A8EE82000F314E /* Extensions.swift */,
-				CE65A78021A8EFE8000F314E /* JsonUtils.swift */,
-				CE65A78621A8F08D000F314E /* Sender.json */,
-				CE65A78421A8F074000F314E /* Message.json */,
 				CE64A7A921AD047700227DF4 /* LoginViewController.swift */,
+				CE5373B121BBAD5D00839AA6 /* NewMessageViewController.swift */,
+				CE65A77C21A8E8E2000F314E /* DataSource.swift */,
+				CE5699E421B996C70065D222 /* AppData.swift */,
+				CE65A76921A8C1D5000F314E /* Main.storyboard */,
+				CE65A77121A8C1DC000F314E /* LaunchScreen.storyboard */,
 				CE64A7AB21AD087A00227DF4 /* User.swift */,
+				CE96AE5B21B65CE100FCE0E1 /* Utils.swift */,
+				CE65A76F21A8C1DC000F314E /* Assets.xcassets */,
+				CE65A77421A8C1DC000F314E /* Info.plist */,
+				CE790B1221BAD3E5002FCB6F /* ios-messaging-app.entitlements */,
+				CE65A76C21A8C1D5000F314E /* ios_messaging_app.xcdatamodeld */,
 			);
 			path = "ios-messaging-app";
 			sourceTree = "<group>";
@@ -162,6 +195,11 @@
 				TargetAttributes = {
 					CE65A76121A8C1D5000F314E = {
 						CreatedOnToolsVersion = 10.1;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -191,10 +229,9 @@
 				CE50386221B2392400B7BCE2 /* user-icon.png in Resources */,
 				CE65A77321A8C1DC000F314E /* LaunchScreen.storyboard in Resources */,
 				CE50386021B2280700B7BCE2 /* messages-120.png in Resources */,
-				CE65A78721A8F08D000F314E /* Sender.json in Resources */,
 				CE65A77021A8C1DC000F314E /* Assets.xcassets in Resources */,
 				CE65A76B21A8C1D5000F314E /* Main.storyboard in Resources */,
-				CE65A78521A8F074000F314E /* Message.json in Resources */,
+				CE5373B421BBB6F100839AA6 /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -269,14 +306,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE65A77B21A8DCD2000F314E /* MenuTableViewController.swift in Sources */,
+				CE5373B221BBAD5D00839AA6 /* NewMessageViewController.swift in Sources */,
+				CE5699EA21B9C2DB0065D222 /* UIImageView.swift in Sources */,
 				CE65A78B21A9034D000F314E /* MainTableViewCell.swift in Sources */,
-				CE65A78121A8EFE8000F314E /* JsonUtils.swift in Sources */,
+				CE5699E521B996C70065D222 /* AppData.swift in Sources */,
 				CE65A78921A8F629000F314E /* MenuTableViewCell.swift in Sources */,
-				CE65A77F21A8EE82000F314E /* Extensions.swift in Sources */,
+				CE65A77F21A8EE82000F314E /* NSDictionary.swift in Sources */,
+				CE790B1421BAD58A002FCB6F /* UIViewController.notifications.swift in Sources */,
+				CE96AE5C21B65CE100FCE0E1 /* Utils.swift in Sources */,
 				CE65A76E21A8C1D5000F314E /* ios_messaging_app.xcdatamodeld in Sources */,
 				CE65A76821A8C1D5000F314E /* MainViewController.swift in Sources */,
 				CE65A77D21A8E8E2000F314E /* DataSource.swift in Sources */,
+				CE5699E821B9BFE20065D222 /* UIView.swift in Sources */,
 				CE64A7AA21AD047700227DF4 /* LoginViewController.swift in Sources */,
+				CE790B3E21BAF5C7002FCB6F /* AppDelegate.extension.swift in Sources */,
 				CE65A76621A8C1D5000F314E /* AppDelegate.swift in Sources */,
 				CE64A7AC21AD087A00227DF4 /* User.swift in Sources */,
 			);
@@ -425,6 +468,7 @@
 			baseConfigurationReference = 9F24E4894AB9696E9B87DE59 /* Pods-ios-messaging-app.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "ios-messaging-app/ios-messaging-app.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8SUQQ8935B;
 				INFOPLIST_FILE = "ios-messaging-app/Info.plist";
@@ -433,7 +477,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = franciscoigor.messaging.app;
+				PRODUCT_BUNDLE_IDENTIFIER = me.franciscoigor.messaging.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -445,6 +489,7 @@
 			baseConfigurationReference = CEB53243704BE244E8216364 /* Pods-ios-messaging-app.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "ios-messaging-app/ios-messaging-app.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8SUQQ8935B;
 				INFOPLIST_FILE = "ios-messaging-app/Info.plist";
@@ -453,7 +498,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = franciscoigor.messaging.app;
+				PRODUCT_BUNDLE_IDENTIFIER = me.franciscoigor.messaging.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";

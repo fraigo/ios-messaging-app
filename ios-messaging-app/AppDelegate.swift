@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  ios-messaging-app
 //
-//  Created by User on 2018-11-23.
+//  Created by Fracisco Igor on 2018-11-23.
 //  Copyright © 2018 User. All rights reserved.
 //
 
@@ -21,6 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         GIDSignIn.sharedInstance().clientID = "774131575761-67l97i1tp2ku1js2vktk6a48ni26nvmd.apps.googleusercontent.com"
         GIDSignIn.sharedInstance().delegate = self
+        GIDSignIn.sharedInstance()?.scopes.append("https://www.googleapis.com/auth/contacts.readonly")
         
         return true
     }
@@ -102,6 +103,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
+    
+    
 
 }
 
@@ -115,10 +118,14 @@ extension AppDelegate : GIDSignInDelegate {
         if let error = error {
             print("\(error.localizedDescription)")
         } else {
-            let appUser = User(name: user.profile.name, email: user.profile.email, token: user.authentication.idToken, image: (user.profile.imageURL(withDimension: 200)?.absoluteString)!)
-            DataSource.currentUser = appUser
-            DataSource.registerUser()
-            DataSource.loadData()
+            let appUser = User(name: user.profile.name,
+                               email: user.profile.email,
+                               idToken: user.authentication.idToken,
+                               image: (user.profile.imageURL(withDimension: 200)?.absoluteString)!,
+                               authToken: user.authentication.accessToken
+            )
+            AppData.initDataSource(user: appUser)
+            AppData.autoUpdate()
             print("Signed in as \(user.profile.email ?? "[n/a]" )")
         }
     }

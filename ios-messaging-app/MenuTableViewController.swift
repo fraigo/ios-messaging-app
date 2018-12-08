@@ -2,7 +2,7 @@
 //  MenuTableViewController.swift
 //  ios-messaging-app
 //
-//  Created by User on 2018-11-23.
+//  Created by Fracisco Igor on 2018-11-23.
 //  Copyright © 2018 User. All rights reserved.
 //
 
@@ -12,25 +12,23 @@ import CoreData
 class MenuTableViewController: UITableViewController {
     
     var senders : [NSManagedObject] = []
+    let profileButton = UIBarButtonItem()
+    let newMessageButton = UIBarButtonItem()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-    
-        DataSource.autoUpdate()
         DataSource.addDataSourceDelegate(self)
         
-        let button = UIBarButtonItem()
-        button.title = "Profile"
-        button.action = #selector(viewProfile)
-        button.target = self
-        navigationItem.rightBarButtonItem = button
+        profileButton.title = "Profile"
+        profileButton.action = #selector(viewProfile)
+        profileButton.target = self
+        navigationItem.rightBarButtonItem = profileButton
         
-        let button2 = UIBarButtonItem()
-        button2.title = "New"
-        button2.action = #selector(addNew)
-        button2.target = self
-        navigationItem.leftBarButtonItem = button2
+        newMessageButton.title = "New"
+        newMessageButton.action = #selector(addNew)
+        newMessageButton.target = self
+        //navigationItem.leftBarButtonItem = newMessageButton
     }
     
     
@@ -41,6 +39,14 @@ class MenuTableViewController: UITableViewController {
     }
     
     @objc func addNew(){
+        let view = navigationController?.storyboard?.instantiateViewController(withIdentifier: "NewMessage") as! NewMessageViewController
+        present(view, animated: true) {
+            print("Completed")
+        }
+        
+    }
+        
+    @objc func addNewOld(){
         let alert = UIAlertController(title: "New contact", message: "Enther the user", preferredStyle: .alert)
         
         alert.addTextField { (textField) in
@@ -51,7 +57,6 @@ class MenuTableViewController: UITableViewController {
                 let newPosition = textField.beginningOfDocument
                 textField.selectedTextRange = textField.textRange(from: newPosition, to: newPosition)
             })
-            
         }
         
         alert.addAction(UIAlertAction(title: "Message", style: .default, handler: { [weak alert] (_) in
@@ -60,12 +65,12 @@ class MenuTableViewController: UITableViewController {
                     let values: NSDictionary = [
                         "message" :  "Let's chat!",
                         "to" :  email,
-                        "from" : DataSource.currentUser.email,
+                        "from" : AppData.currentUser.email,
                         "visible" : 1,
                         "timestamp" : NSDate().timeIntervalSince1970
                     ]
-                    DataSource.createMessage(data: values)
-                    DataSource.loadData()
+                    AppData.createMessage(data: values)
+                    AppData.loadData()
                 }
             }
         }))
@@ -82,7 +87,6 @@ class MenuTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        navigationItem.title = "Messages (\(senders.count))"
         return senders.count
     }
 
@@ -90,59 +94,28 @@ class MenuTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SenderCell", for: indexPath) as! MenuTableViewCell
         cell.setItem(senders[indexPath.row])
+        DataSource.addDataSourceDelegate(cell)
         print("get cell \(indexPath.row)")
         return cell
     }
     
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let viewCell = sender as! MenuTableViewCell
-        let value = viewCell.object.value(forKey: "email")
-        if (value == nil){
+        if let email = viewCell.sender.email{
+            let newView = segue.destination as! MainViewController
+            let senderImage = viewCell.sender.imageUrl
+            let userImage = AppData.currentUser.image
+            AppData.updateChatHistory(email: email)
+            newView.setImages(senderImage: senderImage!, userImage: userImage)
+            newView.setMessages(email: email)
+        }
+        else{
             tableView.reloadData()
             return
         }
-        let email = value as! String
-        print("Selected \(email)")
-        let newView = segue.destination as! MainViewController
-        newView.setMessages(email: email)
+        
     }
     
     
@@ -158,23 +131,32 @@ class MenuTableViewController: UITableViewController {
 
 extension MenuTableViewController : DataSourceDelegate {
     
-    func DataSourceLoaded() {
-        if let user = DataSource.currentUser {
-            let newSenders = DataSource.filterField(entity: "Sender", field: "email", value: user.email, operation: "<>")
-            print("Updating senders \(newSenders.count)")
-            self.senders = newSenders
-            self.tableView.reloadData()
+    func DataSourceLoaded(entity: String) {
+        if (entity == "Sender"){
+            if AppData.currentUser != nil {
+                let newSenders = AppData.getSenders()
+                print("Updating senders \(newSenders.count)")
+                self.senders = newSenders
+                self.tableView.reloadData()
+                navigationItem.leftBarButtonItem = newMessageButton
+            }else{
+                self.senders = []
+                self.tableView.reloadData()
+                navigationItem.leftBarButtonItem = nil
+                navigationItem.title = "Messages"
+            }
+        }
+        if (entity == "Message"){
+            let pendingMessages = AppData.pendingMessages(senders: senders)
+            navigationItem.title = "Messages"
+            if (pendingMessages>0){
+                navigationItem.title = "Messages (\(pendingMessages))"
+                userNotification(message: "You have \(pendingMessages) new messages", title: "New messags", count: pendingMessages)
+            }else{
+                clearNotification()
+            }
+            
         }
     }
 }
 
-
-extension MenuTableViewController : UISplitViewControllerDelegate {
-    
-    // allows to show the main table view at the start of the application
-    func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController: UIViewController, onto primaryViewController: UIViewController) -> Bool {
-        return true
-    }
-    
-    
-}

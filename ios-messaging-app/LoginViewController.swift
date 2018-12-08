@@ -2,12 +2,13 @@
 //  LoginViewController.swift
 //  ios-messaging-app
 //
-//  Created by User on 2018-11-26.
+//  Created by Fracisco Igor on 2018-11-26.
 //  Copyright © 2018 User. All rights reserved.
 //
 
 import UIKit
 import GoogleSignIn
+
 
 class LoginViewController: UIViewController, GIDSignInUIDelegate {
 
@@ -15,23 +16,32 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate {
     @IBOutlet weak var loginLabel: UILabel!
     @IBOutlet weak var googleButton: GIDSignInButton!
     @IBOutlet weak var signOutButton: UIButton!
+    var firstLogin = true
+    
+    var collapseDetail : Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         GIDSignIn.sharedInstance().uiDelegate = self
         GIDSignIn.sharedInstance().signInSilently()
-        loginImage.layer.cornerRadius = 50
-        loginImage.clipsToBounds = true
+        loginImage.rounded()
         setImage(name: "user-icon", imageView: loginImage)
+        if let user = AppData.currentUser {
+            firstLogin = false
+            updateView(user: user)
+        }
+        requestNotificationAuthorization()
+        splitViewController?.delegate = self
     }
     
     @IBAction func signOutClick(_ sender: Any) {
         signOutButton.isHidden = true
         loginLabel.text = "Not Signed"
-        DataSource.loadData()
+        AppData.closeDataSource()
         googleButton.isHidden = false
         GIDSignIn.sharedInstance().signOut()
         setImage(name: "user-icon", imageView: loginImage)
+        AppData.clearData()
     }
     
     /*
@@ -48,13 +58,26 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate {
         updateLogin()
     }
     
+    func updateView(user: User){
+        loginLabel.text = "Signed In as " + user.email
+        signOutButton.isHidden = false
+        loadImage(url: user.image, imageView: loginImage)
+        googleButton.isHidden = true
+    }
+    
     func updateLogin(){
         print("Checking login")
-        if let user = DataSource.currentUser {
-            loginLabel.text = "Signed In as " + user.email
-            signOutButton.isHidden = false
-            loadImage(url: user.image, imageView: loginImage)
-            googleButton.isHidden = true
+        if let user = AppData.currentUser {
+            updateView(user: user)
+            let senders = AppData.getSenders()
+            let pendingMessages = AppData.pendingMessages(senders: senders)
+            if (pendingMessages>0){
+                
+            }
+            if firstLogin {
+                navigationController?.popToRootViewController(animated: true)
+            }
+            
         }else{
             DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
                 self.updateLogin()
@@ -74,3 +97,18 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate {
 
 
 
+
+
+
+extension LoginViewController : UISplitViewControllerDelegate {
+    
+    // allows to show the main table view at the start of the application
+    func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController: UIViewController, onto primaryViewController: UIViewController) -> Bool {
+        if AppData.currentUser != nil {
+            return true
+        }
+        return false
+    }
+    
+    
+}

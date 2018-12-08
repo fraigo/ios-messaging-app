@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ios-messaging-app/AppDelegate.swift"
-            timestampString = "565589773.5801899"
+            timestampString = "565955008.9592561"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "125"
-            endingLineNumber = "125"
+            startingLineNumber = "132"
+            endingLineNumber = "132"
             landmarkName = "AppDelegate"
             landmarkType = "21">
          </BreakpointContent>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ios-messaging-app/MainTableViewCell.swift"
-            timestampString = "565593473.345524"
+            timestampString = "565955008.960094"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "35"
-            endingLineNumber = "35"
+            startingLineNumber = "45"
+            endingLineNumber = "45"
             landmarkName = "updateView()"
             landmarkType = "7">
          </BreakpointContent>
@@ -41,14 +41,14 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ios-messaging-app/JsonUtils.swift"
-            timestampString = "565593473.346289"
+            filePath = "ios-messaging-app/MenuTableViewCell.swift"
+            timestampString = "565955008.960216"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "45"
-            endingLineNumber = "45"
-            landmarkName = "getJsonFromUrl(url:token:onComplete:)"
-            landmarkType = "9">
+            startingLineNumber = "23"
+            endingLineNumber = "23"
+            landmarkName = "setItem(_:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -57,14 +57,14 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ios-messaging-app/JsonUtils.swift"
-            timestampString = "565593473.346364"
+            filePath = "ios-messaging-app/LoginViewController.swift"
+            timestampString = "565955008.960333"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "46"
-            endingLineNumber = "46"
-            landmarkName = "getJsonFromUrl(url:token:onComplete:)"
-            landmarkType = "9">
+            startingLineNumber = "75"
+            endingLineNumber = "75"
+            landmarkName = "updateLogin()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -73,14 +73,14 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ios-messaging-app/JsonUtils.swift"
-            timestampString = "565593473.346428"
+            filePath = "ios-messaging-app/LoginViewController.swift"
+            timestampString = "565955008.960447"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "38"
-            endingLineNumber = "38"
-            landmarkName = "getJsonFromUrl(url:token:onComplete:)"
-            landmarkType = "9">
+            startingLineNumber = "107"
+            endingLineNumber = "107"
+            landmarkName = "splitViewController(_:collapseSecondary:onto:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -89,14 +89,14 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ios-messaging-app/JsonUtils.swift"
-            timestampString = "565593473.346493"
+            filePath = "ios-messaging-app/LoginViewController.swift"
+            timestampString = "565955008.9605581"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "39"
-            endingLineNumber = "39"
-            landmarkName = "getJsonFromUrl(url:token:onComplete:)"
-            landmarkType = "9">
+            startingLineNumber = "80"
+            endingLineNumber = "80"
+            landmarkName = "updateLogin()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -105,46 +105,30 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ios-messaging-app/JsonUtils.swift"
-            timestampString = "565593473.346558"
+            filePath = "ios-messaging-app/DataSource.swift"
+            timestampString = "565955008.960676"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "43"
-            endingLineNumber = "43"
-            landmarkName = "getJsonFromUrl(url:token:onComplete:)"
-            landmarkType = "9">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "ios_messaging_app.getJsonFromUrl(url: Swift.String, token: Swift.String, onComplete: (Foundation.Data) -&gt; ()) -&gt; ()"
-                  moduleName = "ios-messaging-app"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/user/projects/ios-messaging-app/ios-messaging-app/JsonUtils.swift"
-                  timestampString = "565585087.411297"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "43"
-                  endingLineNumber = "43"
-                  offsetFromSymbolStart = "1152">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Optional&lt;Foundation.Data&gt;, Swift.Optional&lt;__C.NSURLResponse&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in ios_messaging_app.getJsonFromUrl(url: Swift.String, token: Swift.String, onComplete: (Foundation.Data) -&gt; ()) -&gt; ()"
-                  moduleName = "ios-messaging-app"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/user/projects/ios-messaging-app/ios-messaging-app/JsonUtils.swift"
-                  timestampString = "565585087.415171"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "45"
-                  endingLineNumber = "45"
-                  offsetFromSymbolStart = "56">
-               </Location>
-            </Locations>
+            startingLineNumber = "101"
+            endingLineNumber = "101"
+            landmarkName = "parseDictionary(data:sortKey:itemKey:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ios-messaging-app/extensions/UIViewController.notifications.swift"
+            timestampString = "565955008.96161"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "53"
+            endingLineNumber = "53"
+            landmarkName = "clearNotification()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

@@ -2,7 +2,7 @@
 //  ViewController.swift
 //  ios-messaging-app
 //
-//  Created by User on 2018-11-23.
+//  Created by Fracisco Igor on 2018-11-23.
 //  Copyright © 2018 User. All rights reserved.
 //
 
@@ -19,12 +19,18 @@ class MainViewController: UIViewController {
     @IBOutlet weak var keyboardConstraint: NSLayoutConstraint!
     var messages: [NSManagedObject] = []
     var email: String = ""
+    var senderImage : String?
+    var userImage : String?
     
+    func setImages(senderImage: String, userImage:String){
+        self.senderImage = senderImage
+        self.userImage = userImage
+    }
     
     func setMessages(email: String)
     {
         let oldCount = messages.count
-        self.messages = DataSource.filterMessagesOf(email: email)
+        self.messages = AppData.filterMessagesOf(email: email)
         self.email = email
         if (tableView != nil){
             print("Updating messages \(email) \(messages.count)" )
@@ -34,22 +40,18 @@ class MainViewController: UIViewController {
                 tableView.selectRow(at: indexPath, animated: true, scrollPosition: .bottom)
                 self.tableView.scrollToNearestSelectedRow(at: .bottom, animated: true)
             }
+            navigationItem.title = AppData.getSender(email: email)?.name
         }
         
     }
     
     
     @IBAction func sendMessage(_ sender: Any) {
-        let values: NSDictionary = [
-            "message" :  messageField.text,
-            "to" :  self.email,
-            "from" : DataSource.currentUser.email,
-            "visible" : 1,
-            "timestamp" : NSDate().timeIntervalSince1970
-            ]
-        print(values)
-        
-        DataSource.createMessage(data: values)
+        if (messageField.text.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).count==0){
+            return
+        }
+        let values = AppData.messageData(message: messageField.text, toEmail: email)
+        AppData.createMessage(data: values)
         setMessages(email: self.email)
         messageField.text = ""
     }
@@ -63,7 +65,6 @@ class MainViewController: UIViewController {
         DataSource.addDataSourceDelegate(self)
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyBoardDidShow(notification:)), name: UIResponder.keyboardDidShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyBoardDidHide(notification:)), name: UIResponder.keyboardDidHideNotification, object: nil)
-        
         
     }
     
@@ -96,9 +97,14 @@ class MainViewController: UIViewController {
 
 extension MainViewController : DataSourceDelegate {
     
-    func DataSourceLoaded() {
-        if DataSource.currentUser != nil {
-            setMessages(email: self.email)
+    func DataSourceLoaded(entity: String) {
+        if (entity == "Message"){
+            if AppData.currentUser != nil {
+                setMessages(email: self.email)
+            }
+        }
+        if self.viewIfLoaded?.window != nil {
+            AppData.updateChatHistory(email: self.email)
         }
     }
 }
@@ -116,6 +122,25 @@ extension MainViewController : UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MessageCell", for: indexPath) as! MainTableViewCell
         let message = messages[indexPath.row]
+        cell.header = true
+        cell.footer = true
+        if (indexPath.row>0){
+            let prevMessage = messages[indexPath.row - 1] as! Message
+            let currentMessage = message as! Message
+            if (currentMessage.from == prevMessage.from){
+                cell.header = false
+            }
+        }
+        if (indexPath.row < messages.count - 2){
+            let nextMessage = messages[indexPath.row + 1] as! Message
+            let currentMessage = message as! Message
+            let diff = nextMessage.timestamp - currentMessage.timestamp
+            if (currentMessage.from == nextMessage.from && diff<10){
+                cell.footer = false
+            }
+        }
+        cell.senderImage = senderImage
+        cell.userImage = userImage
         cell.setMessage(message, email: self.email)
         return cell
     }

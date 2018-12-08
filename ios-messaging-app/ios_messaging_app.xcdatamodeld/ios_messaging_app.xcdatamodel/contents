@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14460.32" systemVersion="17G3025" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Contact" representedClassName="Contact" syncable="YES" codeGenerationType="class">
+        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="History" representedClassName="History" syncable="YES" codeGenerationType="class">
+        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lastcheck" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+    </entity>
     <entity name="Message" representedClassName="Message" syncable="YES" codeGenerationType="class">
         <attribute name="from" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="message" optional="YES" attributeType="String" syncable="YES"/>
@@ -15,7 +23,9 @@
         <attribute name="number" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
+        <element name="History" positionX="99" positionY="18" width="128" height="75"/>
         <element name="Message" positionX="257.2890625" positionY="-21.80859375" width="128" height="120"/>
         <element name="Sender" positionX="-63" positionY="-18" width="128" height="120"/>
+        <element name="Contact" positionX="99" positionY="18" width="128" height="75"/>
     </elements>
 </model>
