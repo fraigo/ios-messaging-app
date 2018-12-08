@@ -30,15 +30,21 @@ An iOS Messaging application
   * DateToolsSwift : Provides human readable date/time for messages (An hour ago, Just now)
   * SearchTextField : Provides auto-complete functionality to the Contact search for new messages.
 
-### Internal Components
+### Application Components
 
 * DataSource
+  * Json data convert and processing
   * Generic Library for API Access
   * Local storage for API results using CoreData
   * Realtime update of Entities
 * AppData
   * Chat API client Implementation
   * Data services for the application (Models, Filters, Operations)
+* Back-end API 
+  * Google authentication / validation
+  * Remote storage for messages and contacts
+  
+  
   
   
 
