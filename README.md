@@ -12,7 +12,7 @@ An iOS Messaging application
 
 ## Screenshots
 
-
+![Screenshot](screenshot/screenshot.gif)
 
 
 ## Components used
