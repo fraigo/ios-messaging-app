@@ -135,7 +135,6 @@ extension MenuTableViewController : DataSourceDelegate {
         if (entity == "Sender"){
             if AppData.currentUser != nil {
                 let newSenders = AppData.getSenders()
-                print("Updating senders \(newSenders.count)")
                 self.senders = newSenders
                 self.tableView.reloadData()
                 navigationItem.leftBarButtonItem = newMessageButton

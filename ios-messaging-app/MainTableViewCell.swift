@@ -60,6 +60,9 @@ class MainTableViewCell: UITableViewCell {
             
             if (from == self.email){
                 let senderName = AppData.getSender(email: from)?.name
+                if (senderName == nil){
+                    return;
+                }
                 senderLabel.text = " " + senderName! + " (" + from + ")"
                 messageContent.textAlignment = .left
                 senderLabel.textAlignment = .left

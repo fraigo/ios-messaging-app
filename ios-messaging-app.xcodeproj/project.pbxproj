@@ -12,6 +12,7 @@
 		CE50386221B2392400B7BCE2 /* user-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = CE50386121B2392400B7BCE2 /* user-icon.png */; };
 		CE5373B221BBAD5D00839AA6 /* NewMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5373B121BBAD5D00839AA6 /* NewMessageViewController.swift */; };
 		CE5373B421BBB6F100839AA6 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = CE5373B321BBB6F100839AA6 /* README.md */; };
+		CE5373B821BC4C1B00839AA6 /* AutoCompleteText.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5373B721BC4C1B00839AA6 /* AutoCompleteText.swift */; };
 		CE5699E521B996C70065D222 /* AppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5699E421B996C70065D222 /* AppData.swift */; };
 		CE5699E821B9BFE20065D222 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5699E721B9BFE20065D222 /* UIView.swift */; };
 		CE5699EA21B9C2DB0065D222 /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5699E921B9C2DB0065D222 /* UIImageView.swift */; };
@@ -39,6 +40,7 @@
 		CE50386121B2392400B7BCE2 /* user-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user-icon.png"; sourceTree = "<group>"; };
 		CE5373B121BBAD5D00839AA6 /* NewMessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageViewController.swift; sourceTree = "<group>"; };
 		CE5373B321BBB6F100839AA6 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		CE5373B721BC4C1B00839AA6 /* AutoCompleteText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoCompleteText.swift; sourceTree = "<group>"; };
 		CE5699E421B996C70065D222 /* AppData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppData.swift; sourceTree = "<group>"; };
 		CE5699E721B9BFE20065D222 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		CE5699E921B9C2DB0065D222 /* UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
@@ -103,6 +105,14 @@
 			name = images;
 			sourceTree = "<group>";
 		};
+		CE5373B621BC4BFE00839AA6 /* components */ = {
+			isa = PBXGroup;
+			children = (
+				CE5373B721BC4C1B00839AA6 /* AutoCompleteText.swift */,
+			);
+			path = components;
+			sourceTree = "<group>";
+		};
 		CE5699E621B9BF400065D222 /* extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -137,6 +147,7 @@
 		CE65A76421A8C1D5000F314E /* ios-messaging-app */ = {
 			isa = PBXGroup;
 			children = (
+				CE5373B621BC4BFE00839AA6 /* components */,
 				CE5373B521BBBC2A00839AA6 /* images */,
 				CE5699E621B9BF400065D222 /* extensions */,
 				CE65A76521A8C1D5000F314E /* AppDelegate.swift */,
@@ -267,6 +278,7 @@
 				"${BUILT_PRODUCTS_DIR}/GTMOAuth2/GTMOAuth2.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/SearchTextField/SearchTextField.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -274,6 +286,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMOAuth2.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SearchTextField.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -315,6 +328,7 @@
 				CE790B1421BAD58A002FCB6F /* UIViewController.notifications.swift in Sources */,
 				CE96AE5C21B65CE100FCE0E1 /* Utils.swift in Sources */,
 				CE65A76E21A8C1D5000F314E /* ios_messaging_app.xcdatamodeld in Sources */,
+				CE5373B821BC4C1B00839AA6 /* AutoCompleteText.swift in Sources */,
 				CE65A76821A8C1D5000F314E /* MainViewController.swift in Sources */,
 				CE65A77D21A8E8E2000F314E /* DataSource.swift in Sources */,
 				CE5699E821B9BFE20065D222 /* UIView.swift in Sources */,

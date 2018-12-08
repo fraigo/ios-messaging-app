@@ -217,7 +217,6 @@ class DataSource: NSObject {
             do {
                 entities = try managedContext.fetch(fetchRequest)
                 if (entities.count > 0){
-                    print("Deleting")
                     for item in entities {
                         managedContext.delete(item)
                     }

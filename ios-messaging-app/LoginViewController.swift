@@ -59,7 +59,7 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate {
     }
     
     func updateView(user: User){
-        loginLabel.text = "Signed In as " + user.email
+        loginLabel.text = "Signed In as\n" + user.name + "\n" + user.email
         signOutButton.isHidden = false
         loadImage(url: user.image, imageView: loginImage)
         googleButton.isHidden = true

@@ -7,42 +7,56 @@
 //
 
 import UIKit
+import SearchTextField
 
 class NewMessageViewController: UIViewController {
 
-    @IBOutlet weak var nameField: UITextField!
+    @IBOutlet weak var nameField: SearchTextField!
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var messageField: UITextView!
-    @IBOutlet weak var sendButton: NSLayoutConstraint!
     @IBOutlet weak var cancelButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        nameField.delegate = self
-        // Do any additional setup after loading the view.
+        messageField.bordered(radius: 5, color: UIColor.lightGray)
+        nameField.theme.bgColor = UIColor(white: 1.0, alpha: 0.9)
+        nameField.theme.font = UIFont.systemFont(ofSize: 16)
+        nameField.theme.cellHeight = 45
+        nameField.itemSelectionHandler = {item, itemPosition in
+            let itemSelected = item[itemPosition]
+            self.nameField.text = itemSelected.title
+            self.emailField.text = itemSelected.subtitle
+            self.messageField.becomeFirstResponder()
+        }
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override func viewDidAppear(_ animated: Bool) {
+        
+        var items = [SearchTextFieldItem]()
+        let contacts = DataSource.getEntities(entity: "Contact")
+        for contact in contacts{
+            if let c = contact as? Contact{
+                let item1 = SearchTextFieldItem(title: c.name!, subtitle: c.email!, image: UIImage(named: "user-icon.png"))
+                items.append(item1)
+            }
+        }
+        nameField.filterItems(items)
+        
     }
-    */
+
 
     @IBAction func sendClick(_ sender: Any) {
+        let email = emailField.text
         let values: NSDictionary = [
             "message" :  messageField.text,
-            "to" :  emailField.text as Any,
+            "to" :  email as Any,
             "from" : AppData.currentUser.email,
             "visible" : 1,
             "timestamp" : NSDate().timeIntervalSince1970
         ]
         AppData.createMessage(data: values)
         AppData.loadData()
+        AppData.updateChatHistory(email: email!)
         self.dismiss(animated: true, completion: nil)
     }
     
@@ -52,43 +66,4 @@ class NewMessageViewController: UIViewController {
 }
 
 
-
-extension NewMessageViewController : UITextFieldDelegate {
-    
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        var suggestions = [Contact]()
-        let contacts = DataSource.getEntities(entity: "Contact")
-        for contact in contacts{
-            if let c = contact as? Contact{
-                suggestions.append(c)
-            }
-        }
-        return !autoCompleteText( in : textField, using: string, suggestions: suggestions)
-    }
-    
-    func autoCompleteText( in textField: UITextField, using string: String, suggestions: [Contact]) -> Bool {
-        if !string.isEmpty,
-            let selectedTextRange = textField.selectedTextRange,
-            selectedTextRange.end == textField.endOfDocument,
-            let prefixRange = textField.textRange(from: textField.beginningOfDocument, to: selectedTextRange.start),
-            let text = textField.text( in : prefixRange) {
-                let prefix = text + string
-                let matches = suggestions.filter {
-                    $0.name!.lowercased().hasPrefix(prefix.lowercased())
-                }
-                if (matches.count > 0) {
-                    textField.text = matches[0].name
-                    emailField.text = matches[0].email
-                    if let start = textField.position(from: textField.beginningOfDocument, offset: prefix.lengthOfBytes(using: .utf8)) {
-                        textField.selectedTextRange = textField.textRange(from: start, to: textField.endOfDocument)
-                        return true
-                    }
-                }
-            }
-        return false
-    }
-    
-    
-    
-}
 

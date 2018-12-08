@@ -20,10 +20,12 @@ PODS:
   - GTMSessionFetcher/Core (1.2.0)
   - GTMSessionFetcher/Full (1.2.0):
     - GTMSessionFetcher/Core (= 1.2.0)
+  - SearchTextField (1.2.2)
 
 DEPENDENCIES:
   - DateToolsSwift
   - GoogleSignIn
+  - SearchTextField
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -32,6 +34,7 @@ SPEC REPOS:
     - GoogleToolboxForMac
     - GTMOAuth2
     - GTMSessionFetcher
+    - SearchTextField
 
 SPEC CHECKSUMS:
   DateToolsSwift: 875d97ff9e3a5d54abdd67a269b3f51c757b71ab
@@ -39,7 +42,8 @@ SPEC CHECKSUMS:
   GoogleToolboxForMac: 91c824d21e85b31c2aae9bb011c5027c9b4e738f
   GTMOAuth2: c77fe325e4acd453837e72d91e3b5f13116857b2
   GTMSessionFetcher: 0c4baf0a73acd0041bf9f71ea018deedab5ea84e
+  SearchTextField: a0992739d4b05dcbb40fb3a5cc6526bd991bdd23
 
-PODFILE CHECKSUM: 9cf8b92280ee521564d1e5edf9c8774a42b9e3d9
+PODFILE CHECKSUM: 8cd77d3bf6aeadf33a4e834851079c66ce8d6a55
 
 COCOAPODS: 1.5.3

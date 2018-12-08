@@ -18,7 +18,7 @@ class AppData : NSObject {
     
     
     static func initDataSource(user: User){
-        endpointURL = "https://message-chat-api.herokuapp.com/index.php/"
+        endpointURL = "https://message-chat-api.herokuapp.com/"
         currentUser = user
         DataSource.setAuthenticationBearer(value: user.idToken)
         DataSource.headers["Client-Id"] = GIDSignIn.sharedInstance().clientID

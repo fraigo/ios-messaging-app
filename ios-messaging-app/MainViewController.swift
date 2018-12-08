@@ -11,6 +11,7 @@ import CoreData
 
 class MainViewController: UIViewController {
     
+    
     @IBOutlet weak var tableView: UITableView!
     
     @IBOutlet weak var sendButton: UIButton!
@@ -27,6 +28,12 @@ class MainViewController: UIViewController {
         self.userImage = userImage
     }
     
+    
+    @IBAction func emojiClick(_ sender: Any) {
+        let button = sender as! UIButton
+        messageField.insertText(button.currentTitle!)
+    }
+    
     func setMessages(email: String)
     {
         let oldCount = messages.count
@@ -35,7 +42,7 @@ class MainViewController: UIViewController {
         if (tableView != nil){
             print("Updating messages \(email) \(messages.count)" )
             tableView.reloadData()
-            if (oldCount != messages.count){
+            if (oldCount != messages.count && messages.count > 0){
                 let indexPath = IndexPath(row: messages.count - 1, section: 0)
                 tableView.selectRow(at: indexPath, animated: true, scrollPosition: .bottom)
                 self.tableView.scrollToNearestSelectedRow(at: .bottom, animated: true)
@@ -53,6 +60,7 @@ class MainViewController: UIViewController {
         let values = AppData.messageData(message: messageField.text, toEmail: email)
         AppData.createMessage(data: values)
         setMessages(email: self.email)
+        AppData.updateChatHistory(email: email)
         messageField.text = ""
     }
     

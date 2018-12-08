@@ -8,5 +8,6 @@ target 'ios-messaging-app' do
   # Pods for ios-messaging-app
   pod 'GoogleSignIn'
   pod 'DateToolsSwift'
+  pod 'SearchTextField'
 
 end
