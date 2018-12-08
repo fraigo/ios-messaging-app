@@ -28,6 +28,7 @@ An iOS Messaging application
 * Cocoa Pods
   * GoogleSignIn : Provides Google authentication and contact services
   * DateToolsSwift : Provides human readable date/time for messages (An hour ago, Just now)
+  * SearchTextField : Provides auto-complete functionality to the Contact search for new messages.
 
 ### Internal Components
 
