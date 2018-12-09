@@ -12,14 +12,14 @@ An iOS Messaging application
 
 ## Screenshots
 
-![](screenshot/screenshot02.png)
-![](screenshot/screenshot03.png)
+<kbd><img src="screenshot/screenshot02.png" ></kbd>
+<kbd><img src="screenshot/screenshot03.png" ></kbd>
 
-![](screenshot/screenshot04.png)
-![](screenshot/screenshot05.png)
+<kbd><img src="screenshot/screenshot04.png" ></kbd>
+<kbd><img src="screenshot/screenshot05.png" ></kbd>
 
-![](screenshot/screenshot06.png)
-![](screenshot/screenshot01.png)
+<kbd><img src="screenshot/screenshot06.png" ></kbd>
+<kbd><img src="screenshot/screenshot01.png" ></kbd>
 
 
 
