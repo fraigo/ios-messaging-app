@@ -34,6 +34,8 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate {
         splitViewController?.delegate = self
     }
     
+    
+    
     @IBAction func signOutClick(_ sender: Any) {
         signOutButton.isHidden = true
         loginLabel.text = "Not Signed"
@@ -104,10 +106,8 @@ extension LoginViewController : UISplitViewControllerDelegate {
     
     // allows to show the main table view at the start of the application
     func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController: UIViewController, onto primaryViewController: UIViewController) -> Bool {
-        if AppData.currentUser != nil {
-            return true
-        }
-        return false
+        
+        return true
     }
     
     

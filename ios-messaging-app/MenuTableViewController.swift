@@ -31,6 +31,15 @@ class MenuTableViewController: UITableViewController {
         //navigationItem.leftBarButtonItem = newMessageButton
     }
     
+    override func viewWillLayoutSubviews() {
+        if UIScreen.main.bounds.width>600 {
+            splitViewController!.preferredDisplayMode = .allVisible
+        }else{
+            splitViewController!.preferredDisplayMode = .automatic
+        }
+    }
+    
+
     
     @objc func viewProfile(){
         //performSegue(withIdentifier: "viewProfile", sender: self)
@@ -157,5 +166,7 @@ extension MenuTableViewController : DataSourceDelegate {
             
         }
     }
+    
+    
 }
 
